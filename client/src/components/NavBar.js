@@ -5,7 +5,7 @@ import { Button } from "../styles";
 
 function NavBar({ user, setUser }) {
   function handleLogoutClick() {
-    fetch("/api/logout", { method: "DELETE" }).then((r) => {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setUser(null);
       }
@@ -13,23 +13,34 @@ function NavBar({ user, setUser }) {
   }
 
   return (
-    <Wrapper>
-      <Logo>
-        <Link to="/">Reciplease</Link>
-      </Logo>
-      <Nav>
-        <Button as={Link} to="/new">
-          New Recipe
-        </Button>
-        <Button variant="outline" onClick={handleLogoutClick}>
-          Logout
-        </Button>
-      </Nav>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Logo>
+          <h1>Party Planner</h1>
+        </Logo>
+        <Nav>
+          <Button as={Link} to="/about">
+            About
+          </Button> 
+          <Button as={Link} to="/parties">
+            Parties
+          </Button>
+          <Button as={Link} to="/items">
+            Items
+          </Button>
+          <Button as={Link} to="/summary">
+            View All Parties
+          </Button>
+          <Button variant="outline" onClick={handleLogoutClick}>
+            Logout
+          </Button>
+        </Nav>
+      </Wrapper>
+    </>
   );
 }
 
-const Wrapper = styled.header`
+const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,8 +49,8 @@ const Wrapper = styled.header`
 
 const Logo = styled.h1`
   font-family: "Permanent Marker", cursive;
-  font-size: 3rem;
-  color: deeppink;
+  font-size: 2rem;
+  color: red;
   margin: 0;
   line-height: 1;
 
@@ -53,7 +64,7 @@ const Nav = styled.nav`
   display: flex;
   gap: 4px;
   position: absolute;
-  right: 8px;
+  left: 20px;
 `;
 
 export default NavBar;
