@@ -53,7 +53,7 @@ const Wrapper = styled.div`
 const Logo = styled.h1`
   font-family: "Permanent Marker", cursive;
   font-size: 2rem;
-  color: red;
+  color: blue;
   margin: 0;
   line-height: 1;
 
