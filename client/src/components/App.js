@@ -15,6 +15,9 @@ function App() {
   const [itemOptions, setItemOptions] = useState([]);
   const [itemId, setItemId] = useState("");
   const [itemIndex, setItemIndex] = useState("");
+  const [locationOptions, setLocationOptions] = useState([]);
+  const [locationId, setLocationId] = useState("");
+  const [locationIndex, setLocationIndex] = useState("");
 
   useEffect(() => {
     // auto-login
@@ -131,6 +134,73 @@ function App() {
     setItemOptions(filteredItemOptions);
   }
 
+  // NEW TO CHECK:
+  function handleAddLocation(newLocation) {
+    console.log("---------------------------------------------------------");
+    console.log("handleAddLocation function called in parent App component");
+    console.log("---------------------------------------------------------");
+    // parties.map((party) => {
+    //   if (party.id == chosenParty.id) {
+    //     const updatedLocationArray = [...party.location, newLocation];
+
+    //     let locationOptions = updatedLocationArray.map((location) => {
+    //         return (
+    //             <option key={location.id} value={location.name}>{location.name}</option>
+    //         )
+    //     });
+
+    //     setLocationOptions(locationOptions);
+    //     let tempArray = [...parties];
+    //     tempArray[partyIndex].location.push(newLocation);
+    //     setParties(tempArray) ;
+    //   } 
+    //   else {
+    //     console.log("Match not found within 'handleAddNewLocation!");
+    //   }});
+  }
+
+  function handleChangeLocationInfo(chosenLocationId, chosenLocationIndex) {
+    console.log("---------------------------------------------------------");
+    console.log("handleChangeLocation function called in parent App component");
+    console.log("---------------------------------------------------------");
+    // setLocationId(chosenLocationId);
+    // setLocationIndex(chosenLocationIndex);
+  }
+
+  function handleEditLocation(editedLocation) {
+    console.log("---------------------------------------------------------");
+    console.log("handleEditLocation function called in parent App component");
+    console.log("---------------------------------------------------------");
+    // let tempArray = [...parties];
+    // tempArray[partyIndex].location[locationIndex] = editedLocation;
+    // setParties(tempArray);
+
+    // let locationOptions = chosenParty.location.map((location) => {
+    //   return (
+    //       <option key={location.id} value={location.name}>{location.name}</option>
+    //   )
+    // });
+
+    // setLocationOptions(locationOptions);
+  }
+
+  function handleDeleteLocation(response, deletedLocationId) {
+    console.log("---------------------------------------------------------");
+    console.log("handleDeleteLocation function called in parent App component");
+    console.log("---------------------------------------------------------");
+    // let tempArray = [...parties];
+    // tempArray[partyIndex].location.splice(locationIndex, 1)
+    // setParties(tempArray);
+
+    // let filteredLocationOptions = chosenParty.location.map((location) => {
+    //     return (
+    //         <option key={location.id} value={location.name}>{location.name}</option>
+    //     )
+    // });
+
+    // setLocationOptions(filteredLocationOptions);
+  }
+
   // Two resources used for 'Navigate' for '/' route for '/about' component:
   // https://www.pluralsight.com/guides/how-to-set-react-router-default-route-redirect-to-home
   // https://stackoverflow.com/questions/63690695/react-redirect-is-not-exported-from-react-router-dom
@@ -155,6 +225,13 @@ function App() {
             parties={parties} onChooseParty={handleChooseParty} chosenParty={chosenParty} onFetchParties={handleFetchParties}
             onAddItem={handleAddItem} itemOptions={itemOptions} setItemOptions={setItemOptions} itemId={itemId} setItemId={setItemId} onChangeItemInfo={handleChangeItemInfo}
             onEditItem={handleEditItem} onDeleteItem={handleDeleteItem} 
+          />}
+        />
+        <Route
+          path="/location"
+          element={<Location 
+            parties={parties} onFetchParties={handleFetchParties} onChooseParty={handleChooseParty} chosenParty={chosenParty}
+            onAddLocation={handleAddLocation} onEditLocation={handleEditLocation} onDeleteLocation={handleDeleteLocation}
           />}
         />
         <Route 

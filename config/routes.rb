@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   resources :parties do 
     resources :items
     # TODO:
-    # Figure out why '/locations' isn't working:
-    resources :locations
+    # Figure out why '/location' isn't working:
+    resources :location
   end
   # Login related routes:
   post "/signup", to: "users#create"
