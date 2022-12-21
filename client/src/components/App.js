@@ -11,9 +11,15 @@ import Summary from "./party/Summary";
 function App() {
   // TODO:
   // Adding 'useContext' for 'NavBar' component:
+  // 'useContext' Docs Page:
+  // https://beta.reactjs.org/apis/react/useContext
+  // Example to possibly use to change themes of the 'NavBar' component:
+  // https://codesandbox.io/s/react-usecontext-rydy5?file=/src/App.js
   const context = React.createContext(null);
   const myContextVal = useContext(context);
   const [contextState, setContextState] = useState(null);
+
+  // Rest of variables:
   const [user, setUser] = useState(null);
   const [parties, setParties] = useState([]);
   const [chosenParty, setChosenParty] = useState({});
@@ -32,7 +38,6 @@ function App() {
         r.json()
         .then((user) => {
           setUser(user);
-          myContextVal.setState(user);
         })
     }
   });
