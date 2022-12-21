@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import Login from "../pages/Login";
 import About from "./About";
@@ -131,12 +131,15 @@ function App() {
     setItemOptions(filteredItemOptions);
   }
 
+  // Two resources used for 'Navigate' for '/' route for '/about' component:
+  // https://www.pluralsight.com/guides/how-to-set-react-router-default-route-redirect-to-home
+  // https://stackoverflow.com/questions/63690695/react-redirect-is-not-exported-from-react-router-dom
   return (
     <>
       <NavBar user={user} setUser={setUser} />
       <Routes>
         <Route 
-          path="/about" 
+          path="/" 
           element={<About user={user}/>} 
         />
         <Route 

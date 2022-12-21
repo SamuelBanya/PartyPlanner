@@ -19,7 +19,7 @@ function NavBar({ user, setUser }) {
           <h1>Party Planner</h1>
         </Logo>
         <Nav>
-          <Button as={Link} to="/about">
+          <Button as={Link} to="/">
             About
           </Button> 
           <Button as={Link} to="/parties">
