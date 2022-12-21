@@ -5,6 +5,7 @@ class UsersController < ApplicationController
         # TODO: 
         # Build the application locally, and put a byebug here so that we can figure out why 
         # the 'Uncaught (in promise) SyntaxError: Unexpected end of JSON input' error is occurring
+        # byebug
         user = User.create!(user_params)
         session[:user_id] = user.id
         render json: user, status: :created
