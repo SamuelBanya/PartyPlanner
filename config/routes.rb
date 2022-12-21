@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :recipes, only: [:index, :create]
+    resources :parties do 
+      resources :items
+    end
+
+    # Login related routes:
     post "/signup", to: "users#create"
     get "/me", to: "users#show"
     post "/login", to: "sessions#create"
     delete "/logout", to: "sessions#destroy"
+    get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
+
   end
   # all other routes will be load our React application
   # this route definition matches:
