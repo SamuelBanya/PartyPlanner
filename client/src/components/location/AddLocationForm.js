@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
 
 function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) {
     const [createLocationFormData, setCreateLocationFormData] = useState({

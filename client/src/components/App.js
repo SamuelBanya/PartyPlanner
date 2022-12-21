@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import About from "./About";
 import Party from "./party/Party";
 import Item from "./item/Item";
+import Location from "./location/Location";
 import Summary from "./party/Summary";
 
 function App() {

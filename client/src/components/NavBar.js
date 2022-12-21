@@ -28,8 +28,8 @@ function NavBar({ user, setUser }) {
           <Button as={Link} to="/items">
             Items
           </Button>
-          <Button as={Link} to="/locations">
-            Locations
+          <Button as={Link} to="/location">
+            Location
           </Button>
           <Button as={Link} to="/summary">
             View All Parties

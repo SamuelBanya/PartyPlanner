@@ -1,4 +1,6 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
+import AddLocationForm from "./AddLocationForm";
+import EditLocationForm from "./EditLocationForm";
 
 function Location({ parties, onFetchParties, onAddLocation, onEditLocation, onDeleteLocation, onChooseParty, chosenParty}) {
     useEffect(() => {
