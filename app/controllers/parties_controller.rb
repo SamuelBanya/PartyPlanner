@@ -15,6 +15,7 @@ class PartiesController < ApplicationController
     end
 
     def index 
+        # byebug
         parties = Party.all
 
         if session[:user_id]
