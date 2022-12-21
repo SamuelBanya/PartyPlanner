@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import Login from "../pages/Login";
@@ -9,6 +9,11 @@ import Location from "./location/Location";
 import Summary from "./party/Summary";
 
 function App() {
+  // TODO:
+  // Adding 'useContext' for 'NavBar' component:
+  const context = React.createContext(null);
+  const myContextVal = useContext(context);
+  const [contextState, setContextState] = useState(null);
   const [user, setUser] = useState(null);
   const [parties, setParties] = useState([]);
   const [chosenParty, setChosenParty] = useState({});
@@ -27,6 +32,7 @@ function App() {
         r.json()
         .then((user) => {
           setUser(user);
+          myContextVal.setState(user);
         })
     }
   });
@@ -205,6 +211,11 @@ function App() {
   // Two resources used for 'Navigate' for '/' route for '/about' component:
   // https://www.pluralsight.com/guides/how-to-set-react-router-default-route-redirect-to-home
   // https://stackoverflow.com/questions/63690695/react-redirect-is-not-exported-from-react-router-dom
+
+  // Previous attempt to use 'useContext':
+      // <context.provider value={{ contextState, setContextState} }>
+      //   <NavBar user={user} setUser={setUser} />
+      // </context.provider>
   return (
     <>
       <NavBar user={user} setUser={setUser} />
