@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
+import swal from "sweetalert";
 
 function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) {
     const [createLocationFormData, setCreateLocationFormData] = useState({
@@ -22,7 +23,10 @@ function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) 
             body: JSON.stringify({ "name": createLocationFormData["location_name"], "party_id": id}),
         })
         .then((response) => response.json())
-        .then((newLocation) => onAddLocation(newLocation));
+        .then((newLocation) => {
+            onAddLocation(newLocation);
+            swal("Location added!");
+        });
     }
 
     return (

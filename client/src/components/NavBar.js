@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Button } from "../styles";
 
 function NavBar({ user, setUser }) {
+  // TODO:
+  // Implement 'useContext' to utilize 'user' props that was handed down
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {

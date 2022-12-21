@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import swal from "sweetalert";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
 
 function EditLocationForm({ locationOptions, setLocationOptions, locationId, setLocationId, onChangeLocationInfo, onEditLocation, onDeleteLocation, parties, onChooseParty, chosenParty }) {
@@ -41,7 +42,10 @@ function EditLocationForm({ locationOptions, setLocationOptions, locationId, set
             body: JSON.stringify({"name": editLocationFormData["location_name"], "party_id": partyId}),
         })
         .then((response) => response.json())
-        .then((editedLocation) => onEditLocation(editedLocation))
+        .then((editedLocation) => {
+            onEditLocation(editedLocation);
+            swal("Location edited!");
+        })
     }
 
     const handleDelete = (e) => {
@@ -54,6 +58,7 @@ function EditLocationForm({ locationOptions, setLocationOptions, locationId, set
         .then((response) => {
             if (response.ok) {
                 onDeleteLocation(response, locationId);
+                swal("Location deleted!");
             }
         })
     }

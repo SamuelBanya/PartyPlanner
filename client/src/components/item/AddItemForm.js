@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
+import swal from "sweetalert";
 
 function AddItemForm({ onAddItem, parties, onChooseParty, chosenParty }) {
     const [createItemFormData, setCreateItemFormData] = useState({
@@ -22,7 +23,10 @@ function AddItemForm({ onAddItem, parties, onChooseParty, chosenParty }) {
             body: JSON.stringify({ "name": createItemFormData["item_name"], "party_id": id}),
         })
         .then((response) => response.json())
-        .then((newItem) => onAddItem(newItem));
+        .then((newItem) => { 
+            onAddItem(newItem)
+            swal("New item added!");
+        });
     }
 
     return (

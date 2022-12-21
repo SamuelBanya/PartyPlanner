@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import swal from "sweetalert";
 
 function AddPartyForm({ onAddParty }) {
     const [createPartyFormData, setCreatePartyFormData] = useState({
@@ -22,7 +23,10 @@ function AddPartyForm({ onAddParty }) {
             body: JSON.stringify({ "name": createPartyFormData["name"], "start_time": createPartyFormData["start_time"], "end_time": createPartyFormData["end_time"] }),
         })
         .then((response) => response.json())
-        .then((newParty) => onAddParty(newParty));
+        .then((newParty) => {
+            onAddParty(newParty);
+            swal("New party created!");
+        });
     }
 
     return (

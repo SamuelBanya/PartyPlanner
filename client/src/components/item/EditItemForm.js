@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
+import swal from "sweetalert";
 
 function EditItemForm({ itemOptions, setItemOptions, itemId, setItemId, onChangeItemInfo, onEditItem, onDeleteItem, parties, onChooseParty, chosenParty }) {
     const [editItemFormData, setEditItemFormData] = useState({
@@ -41,7 +42,10 @@ function EditItemForm({ itemOptions, setItemOptions, itemId, setItemId, onChange
             body: JSON.stringify({"name": editItemFormData["item_name"], "party_id": partyId}),
         })
         .then((response) => response.json())
-        .then((editedItem) => onEditItem(editedItem))
+        .then((editedItem) => { 
+            onEditItem(editedItem);
+            swal("Item edited!");
+        })
     }
 
     const handleDelete = (e) => {
@@ -54,6 +58,7 @@ function EditItemForm({ itemOptions, setItemOptions, itemId, setItemId, onChange
         .then((response) => {
             if (response.ok) {
                 onDeleteItem(response, itemId);
+                swal("Item deleted!");
             }
         })
     }
