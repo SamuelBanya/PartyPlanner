@@ -4,7 +4,10 @@ Rails.application.routes.draw do
     resources :items
     # TODO:
     # Figure out why '/location' isn't working:
-    resources :location
+    # This is a resource to figuring out how to use the singular nested 'resource' in this scenario, which you can do
+    # by only using the 'resource' keyword
+    # https://stackoverflow.com/questions/23509698/ruby-on-rails-nested-routes-with-has-one-association
+    resource :location
   end
   # Login related routes:
   post "/signup", to: "users#create"
