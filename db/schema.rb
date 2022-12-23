@@ -26,11 +26,13 @@ ActiveRecord::Schema.define(version: 2022_12_20_221033) do
   end
 
   create_table "locations", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.bigint "party_id", null: false
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["party_id"], name: "index_locations_on_party_id"
+    t.index ["user_id"], name: "index_locations_on_user_id"
   end
 
   create_table "parties", force: :cascade do |t|
@@ -51,4 +53,5 @@ ActiveRecord::Schema.define(version: 2022_12_20_221033) do
   add_foreign_key "items", "parties"
   add_foreign_key "items", "users"
   add_foreign_key "locations", "parties"
+  add_foreign_key "locations", "users"
 end

@@ -3,5 +3,8 @@ class PartySerializer < ActiveModel::Serializer
 
   has_many :items
   has_many :users, through: :items
+
+  has_one :location
+  has_many :users, through: :location
 end
 

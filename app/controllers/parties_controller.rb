@@ -4,11 +4,15 @@ class PartiesController < ApplicationController
         render json: party, status: :created
     end
 
+    # TODO:
+    # Debug this error:
+    # app/models/party.rb:7:in `<class:Party>'
+    # app/models/party.rb:1:in `<top (required)>'
+    # app/controllers/sessions_controller.rb:8:in `create'
     def update
         party = Party.find_by(id: params[:id])
         user_id = @current_user.id
 
-        # if party
         if party.users.find_by(id: user_id)
             party.update(party_params)
             render json: party
@@ -19,7 +23,6 @@ class PartiesController < ApplicationController
     end
 
     def index 
-        # byebug
         parties = Party.all
 
         if session[:user_id]
@@ -41,7 +44,6 @@ class PartiesController < ApplicationController
     def destroy 
         party = Party.find_by(id: params[:id])
         user_id = @current_user.id
-        # if party
         if party.users.find_by(id: user_id)
             party.destroy
             head :no_content
