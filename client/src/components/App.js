@@ -60,7 +60,10 @@ function App() {
   if (!user) return <Login onLogin={setUser} />;
 
   function handleFetchParties(fetchedParties) {
+    console.log("handleFetchParties function called in parent App component");
+    console.log("fetchedParties: ", fetchedParties);
     setParties(fetchedParties)
+    console.log("parties within handleFetchParties function in parent App component: ", parties);
   }
 
   function handleAddParty(newParty) {
