@@ -16,9 +16,9 @@ class LocationsController < ApplicationController
     # Party[party_id].location.create(location_params)
 
     def create 
-        # byebug
-        location = Location.create(location_params)
-        render json: location, status: :created
+        byebug
+        # location = Location.create(location_params)
+        # render json: location, status: :created
     end
 
     # def update

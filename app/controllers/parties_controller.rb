@@ -3,12 +3,7 @@ class PartiesController < ApplicationController
         party = Party.create!(party_params)
         render json: party, status: :created
     end
-
-    # TODO:
-    # Debug this error:
-    # app/models/party.rb:7:in `<class:Party>'
-    # app/models/party.rb:1:in `<top (required)>'
-    # app/controllers/sessions_controller.rb:8:in `create'
+    
     def update
         party = Party.find_by(id: params[:id])
         user_id = @current_user.id
@@ -53,10 +48,9 @@ class PartiesController < ApplicationController
     end
 
     private 
-
+    
     def party_params
         params.permit(:name, :start_time, :end_time)
     end
-
 end
 
