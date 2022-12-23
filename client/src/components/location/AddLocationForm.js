@@ -5,43 +5,32 @@ import swal from "sweetalert";
 function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) {
     console.log("parties within AddLocationForm child component: ", parties);
 
-    // TEMP:
-    function handleCreateLocationChange() {
-        console.log("TEMP");
-        console.log("handleLocationChange called");
+    const [createLocationFormData, setCreateLocationFormData] = useState({
+        name: "",
+    });
+
+    const handleCreateLocationChange = (e) => {
+        setCreateLocationFormData({...createLocationFormData, [e.target.name]: e.target.value})
+    };
+
+    const handleCreate = (e) => {
+        e.preventDefault();
+        const id = chosenParty.id;
+        console.log("id in handleCreate function in AddLocationForm child component: ", id);
+        fetch(`/parties/${id}/location`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({ "name": createLocationFormData["location_name"], "party_id": id}),
+        })
+        .then((response) => response.json())
+        .then((newLocation) => {
+            onAddLocation(newLocation);
+            swal("Location added!");
+        });
     }
-
-    // TEMP:
-    function handleCreate() {
-        console.log("TEMP");
-        console.log("handleCreate called");
-    }
-
-    // const [createLocationFormData, setCreateLocationFormData] = useState({
-    //     name: "",
-    // });
-
-    // const handleCreateLocationChange = (e) => {
-    //     setCreateLocationFormData({...createLocationFormData, [e.target.name]: e.target.value})
-    // };
-
-    // const handleCreate = (e) => {
-    //     e.preventDefault();
-    //     const id = chosenParty.id;
-    //     fetch(`/parties/${id}/location`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Accept": "application/json",
-    //         },
-    //         body: JSON.stringify({ "name": createLocationFormData["location_name"], "party_id": id}),
-    //     })
-    //     .then((response) => response.json())
-    //     .then((newLocation) => {
-    //         onAddLocation(newLocation);
-    //         swal("Location added!");
-    //     });
-    // }
 
     return (
         <div>

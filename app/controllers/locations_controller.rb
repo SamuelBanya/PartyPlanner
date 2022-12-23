@@ -15,11 +15,11 @@ class LocationsController < ApplicationController
     # Then, use something like the following:
     # Party[party_id].location.create(location_params)
 
-    # def create 
-    #     item = @current_user.items.create(item_params)
-      
-    #     render json: item, status: :created
-    # end
+    def create 
+        # byebug
+        location = Location.create(location_params)
+        render json: location, status: :created
+    end
 
     # def update
     #     item = @current_user.items.find_by(id: params[:id])
@@ -60,7 +60,8 @@ class LocationsController < ApplicationController
 
     # private 
 
-    # def item_params
-    #     params.permit(:name, :party_id)
-    # end
+    def location_params
+        # params.permit(:name, :party_id)
+        params.permit(:name, :party_id, :location)
+    end
 end

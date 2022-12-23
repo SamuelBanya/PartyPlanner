@@ -41,7 +41,7 @@ function Location({ parties, onFetchParties, onAddLocation, onEditLocation, onDe
                 showAdd  &&
                 <AddLocationForm 
                     onAddLocation={onAddLocation} 
-                    parties={parties}
+                    parties={parties} onChooseParty={onChooseParty} chosenParty={chosenParty}
                 />
             }
             {   
