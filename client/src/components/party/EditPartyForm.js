@@ -35,9 +35,15 @@ function EditPartyForm({ parties, onChooseParty, onEditParty, onDeleteParty, cho
             body: JSON.stringify({ "name": editPartyFormData["name"], "start_time": editPartyFormData["start_time"], "end_time": editPartyFormData["end_time"] }),
         })
         .then((response) => response.json())
-        .then((editedParty) => {
-            onEditParty(editedParty);
-            swal("Party edited!");
+        .then((response) => {
+            console.log("response: ", response);
+            if (!response.errors) {
+                onEditParty(response);
+                swal("Party edited!");
+            }
+            else {
+                swal("Party could not be edited! You need to associate items to a party before it can be edited!");
+            }
         });
     }
 
@@ -52,6 +58,9 @@ function EditPartyForm({ parties, onChooseParty, onEditParty, onDeleteParty, cho
             if (response.ok) {
                 onDeleteParty(chosenParty);
                 swal("Party deleted!");
+            }
+            else {
+                swal("Party could not be deleted! You need to associate items to a party before it can be deleted!");
             }
         })
     }

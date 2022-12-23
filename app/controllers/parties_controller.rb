@@ -13,7 +13,8 @@ class PartiesController < ApplicationController
             party.update(party_params)
             render json: party
         else
-            render json: { errors: [party.errors.full_messages] }, status: :unprocessable_entity
+            # render json: { errors: [party.errors.full_messages] }, status: :unprocessable_entity
+            render json: { errors: [party.errors.full_messages] }, status: 400
         end
     end
 
@@ -44,6 +45,8 @@ class PartiesController < ApplicationController
         if party.users.find_by(id: user_id)
             party.destroy
             head :no_content
+        else
+            render json: { error: "Bad request, cannot be deleted" }, status: 400
         end
     end
 
