@@ -6,7 +6,10 @@ class PartiesController < ApplicationController
 
     def update
         party = Party.find_by(id: params[:id])
-        if party
+        user_id = @current_user.id
+
+        # if party
+        if party.users.find_by(id: user_id)
             party.update(party_params)
             render json: party
         else
@@ -36,7 +39,9 @@ class PartiesController < ApplicationController
 
     def destroy 
         party = Party.find_by(id: params[:id])
-        if party
+        user_id = @current_user.id
+        # if party
+        if party.users.find_by(id: user_id)
             party.destroy
             head :no_content
         end
