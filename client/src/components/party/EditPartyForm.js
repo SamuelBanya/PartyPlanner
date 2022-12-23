@@ -42,7 +42,7 @@ function EditPartyForm({ parties, onChooseParty, onEditParty, onDeleteParty, cho
                 swal("Party edited!");
             }
             else {
-                swal("Party could not be edited! You need to associate items to a party before it can be edited!");
+                swal("Party could not be edited! You need to associate items and a location to a party before it can be edited!");
             }
         });
     }
