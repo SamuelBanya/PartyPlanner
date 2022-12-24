@@ -1,9 +1,8 @@
 class LocationsController < ApplicationController
     def create 
-        byebug
-        item = @current_user.location.create(location_params)
+        location = Location.create(user_id: @current_user.id, party_id: params[:party_id], name: params[:name])
       
-        render json: item, status: :created
+        render json: location, status: :created
     end
 
     def update
@@ -46,7 +45,7 @@ class LocationsController < ApplicationController
     private 
 
     def location_params
-        params.permit(:name, :party_id)
+        params.permit(:name, :party_id, :user_id)
     end
 
 end

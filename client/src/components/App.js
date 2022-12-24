@@ -156,26 +156,29 @@ function App() {
     console.log("---------------------------------------------------------");
     console.log("newLocation: ", newLocation);
     console.log("parties: ", parties);
-    parties.map((party) => {
-      if (party.id == chosenParty.id) {
-        const updatedLocationArray = [...party.location, newLocation];
+    // TODO:
+    // Make this actually work:
 
-        let locationOptions = updatedLocationArray.map((location) => {
-            return (
-                <option key={location.id} value={location.name}>{location.name}</option>
-            )
-        });
+    // parties.map((party) => {
+    //   if (party.id == chosenParty.id) {
+    //     const updatedLocationArray = [...party.location, newLocation];
 
-        setLocationOptions(locationOptions);
-        let tempArray = [...parties];
-        tempArray[partyIndex].location.push(newLocation);
-        setParties(tempArray) ;
-      } 
-      else {
-        console.log("Match not found within 'handleAddNewLocation!");
-      }});
+    //     let locationOptions = updatedLocationArray.map((location) => {
+    //         return (
+    //             <option key={location.id} value={location.name}>{location.name}</option>
+    //         )
+    //     });
 
-    console.log("locationOptions after entire handleAddLocation function in parent App component: ", locationOptions);
+    //     setLocationOptions(locationOptions);
+    //     let tempArray = [...parties];
+    //     tempArray[partyIndex].location.push(newLocation);
+    //     setParties(tempArray) ;
+    //   } 
+    //   else {
+    //     console.log("Match not found within 'handleAddNewLocation!");
+    //   }});
+
+    // console.log("locationOptions after entire handleAddLocation function in parent App component: ", locationOptions);
   }
 
   function handleChangeLocationInfo(chosenLocationId, chosenLocationIndex) {

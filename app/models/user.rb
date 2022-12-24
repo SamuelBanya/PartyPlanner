@@ -4,5 +4,8 @@ class User < ApplicationRecord
   
   has_secure_password
 
+  has_one :location
+  has_many :parties, through: :location
+
   validates :username, presence: true, uniqueness: true
 end
