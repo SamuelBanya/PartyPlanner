@@ -28,6 +28,7 @@ function App() {
   const [itemId, setItemId] = useState("");
   const [itemIndex, setItemIndex] = useState("");
   const [location, setLocation] = useState([]);
+  const [locationId, setLocationId] = useState("");
 
   useEffect(() => {
     // auto-login
@@ -102,7 +103,12 @@ function App() {
       console.log("match.location: ", match.location);
       console.log("match.location.name: ", match.location.name);
       let location = match.location.name;
+      let locationId = match.location.id;
+      // NOTE: 
+      // Set the location for it's 'name'
       setLocation(location);
+      // Then, set the 'locationId' for its specific 'id' value to later use a PATCH request for editing, and a 'DELETE' request for deleting
+      setLocationId(locationId);
       console.log("location: ", location);
     }
   }
@@ -185,14 +191,16 @@ function App() {
         console.log("chosenParty.id: ", chosenParty.id);
         console.log("party.location: ", party.location);
         console.log("/////////////////////////////////////////////////////////");
-        let location = chosenParty.location;
-        console.log("location: ", location);
-        setLocation(location);
+        // NOTE
+        // Commented this out because this was causing issues when creating a new location 
+        // and the related form would already be filled in --> Aka only do this when someone has chosen a party
+        // aka only change the location when the 'ChoosePartyDropdown' menu is selected
+        // setLocation(newLocation);
         let tempArray = [...parties];
         console.log("tempArray: ", tempArray);
         console.log("tempArray[partyIndex]: ", tempArray[partyIndex]);
         console.log("tempArray[partyIndex].location: ", tempArray[partyIndex].location);
-        // tempArray[partyIndex].location.push(newLocation);
+        tempArray[partyIndex].location = newLocation;
         setParties(tempArray) ;
       }
       else {
@@ -219,6 +227,9 @@ function App() {
     console.log("---------------------------------------------------------");
     console.log("handleEditLocation function called in parent App component");
     console.log("---------------------------------------------------------");
+    console.log("editedLocation: ", editedLocation);
+    console.log("parties: ", parties);
+    console.log("chosenParty: ", chosenParty);
     // let tempArray = [...parties];
     // tempArray[partyIndex].location[locationIndex] = editedLocation;
     // setParties(tempArray);
@@ -284,7 +295,7 @@ function App() {
           path="/location"
           element={<Location 
             parties={parties} onFetchParties={handleFetchParties} onChooseParty={handleChooseParty} chosenParty={chosenParty}
-            onAddLocation={handleAddLocation} onEditLocation={handleEditLocation} onDeleteLocation={handleDeleteLocation} location={location}
+            onAddLocation={handleAddLocation} onEditLocation={handleEditLocation} onDeleteLocation={handleDeleteLocation} location={location} locationId={locationId}
           />}
         />
         <Route 

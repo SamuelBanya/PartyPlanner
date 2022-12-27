@@ -6,9 +6,13 @@ class LocationsController < ApplicationController
     end
 
     def update
-        location = @current_user.locations.find_by(id: params[:id])
+        location = Location.find_by(id: params[:locationId])
         if location.user_id == @current_user.id
-            location.update(location_params)
+            # TODO:
+            # Figure out why the location isn't being updated accordingly:
+            # byebug
+            # location.update(location_params)
+            location.update(user_id: @current_user.id, party_id: params[:party_id], name: params[:name])
             render json: location
         else
             render json: { errors: [location.errors.full_messages] }, status: :unprocessable_entity
@@ -45,7 +49,7 @@ class LocationsController < ApplicationController
     private 
 
     def location_params
-        params.permit(:name, :party_id, :user_id)
+        params.permit(:name, :party_id, :user_id, :locationId, :location)
     end
 
 end

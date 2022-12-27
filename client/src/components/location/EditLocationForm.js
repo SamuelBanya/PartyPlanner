@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import swal from "sweetalert";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
 
-function EditLocationForm({ location, onEditLocation, onDeleteLocation, parties, onChooseParty, chosenParty }) {
+function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocation, parties, onChooseParty, chosenParty }) {
 
     const [editLocationFormData, setEditLocationFormData] = useState({
         location_name: ""
@@ -13,11 +13,15 @@ function EditLocationForm({ location, onEditLocation, onDeleteLocation, parties,
     // TODO: 
     // Use a 'useEffect' block that pulls in the form data each time the 'chosenParty' within the 'party/ChoosePartyDropdown' menu is changed:
     useEffect(() => {
-        // console.log("chosenParty changed, reacting to this change with a useEffect block in EditLocationForm")
-        // console.log("chosenParty.location: ", chosenParty.location);
-        // console.log("chosenParty.location.name: ", chosenParty.location.name);
+        // console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+        // console.log("chosenParty changed, reacting to this change with a useEffect block in EditLocationForm");
+        // console.log("location: ", location);
         setEditLocationFormData({location_name: location});
+        // console.log("editLocationFormData after useEffect: ", editLocationFormData);
+        // console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
     }, [chosenParty]);
+    
+    console.log("editLocationFormData outside useEffect: ", editLocationFormData);
 
     const handleEditLocationChange = (e) => {
         setEditLocationFormData({...editLocationFormData, [e.target.name]: e.target.value})
@@ -28,19 +32,28 @@ function EditLocationForm({ location, onEditLocation, onDeleteLocation, parties,
 
         const partyId = chosenParty.id;
 
+        console.log("handleEdit function called in EditLocationForm child component");
+        console.log("e.target.value: ", e.target.value);
+        console.log("partyId: ", partyId);
+        console.log("editLocationFormData: ", editLocationFormData);
+        console.log("locationId: ", locationId);
+
+        // TODO:
+        // Figure out how to specify the specific route for a party's location for editing purposes:
+        fetch(`/parties/${partyId}/location`, {
         // fetch(`/parties/${partyId}/location/${locationId}`, {
-        //     method: "PATCH",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Accept": "application/json"
-        //     },
-        //     body: JSON.stringify({"name": editLocationFormData["location_name"], "party_id": partyId}),
-        // })
-        // .then((response) => response.json())
-        // .then((editedLocation) => {
-        //     onEditLocation(editedLocation);
-        //     swal("Location edited!");
-        // })
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({"name": editLocationFormData["location_name"], "party_id": partyId, "locationId": locationId}),
+        })
+        .then((response) => response.json())
+        .then((editedLocation) => {
+            onEditLocation(editedLocation);
+            swal("Location edited!");
+        })
     }
 
     const handleDelete = (e) => {
