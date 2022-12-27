@@ -7,21 +7,25 @@ function EditLocationForm({ locationOptions, setLocationOptions, locationId, set
         location_name: ""
     });
 
+    // TODO:
+    // Actually take this whole process out since there is only one location for each party anyway:
+    // Aka just base it off the 'chosenParty' and dump the value into the corresponding form
     function handleChooseLocation(e) {
-        let mapMatch = locationOptions.find(location => {
-            return location.props.value === e.target.value
-        });
+        console.log("handleChooseLocation function called within EditLocationForm child component");
+        console.log("locationOptions: ", locationOptions);
 
-        let locationMatch = mapMatch.props.value;
+        console.log("locationOptions.props.value: ", locationOptions.props.value);
+        let locationMatch = locationOptions.props.value;
 
         setEditLocationFormData({"location_name": locationMatch});
 
-        let chosenPartyLocationMatch = chosenParty.location.find(location => location.name === locationMatch);
+        console.log("parties: ", parties);
+        console.log("chosenParty: ", chosenParty);
+        console.log("chosenParty.location: ", chosenParty.location);
 
-        let chosenLocationIndex = chosenParty.location.map(location => location.name).indexOf(locationMatch);
+        let chosenPartyLocationMatch = chosenParty.location;
 
-        let chosenLocationId = chosenPartyLocationMatch.id;
-        onChangeLocationInfo(chosenLocationId, chosenLocationIndex);
+        onChangeLocationInfo(chosenPartyLocationMatch);
     }
 
     const handleEditLocationChange = (e) => {
