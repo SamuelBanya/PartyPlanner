@@ -28,8 +28,8 @@ function App() {
   const [itemId, setItemId] = useState("");
   const [itemIndex, setItemIndex] = useState("");
   const [locationOptions, setLocationOptions] = useState([]);
-  const [locationId, setLocationId] = useState("");
-  const [locationIndex, setLocationIndex] = useState("");
+  // const [locationId, setLocationId] = useState("");
+  // const [locationIndex, setLocationIndex] = useState("");
 
   useEffect(() => {
     // auto-login
@@ -206,15 +206,17 @@ function App() {
     // console.log("locationOptions after entire handleAddLocation function in parent App component: ", locationOptions);
   }
 
+  // NOTE:
+  // I took this function out as there is only one location anyway, so this isn't needed:
   // function handleChangeLocationInfo(chosenLocationId, chosenLocationIndex) {
-  function handleChangeLocationInfo(chosenPartyLocationMatch) {
-    console.log("---------------------------------------------------------");
-    console.log("handleChangeLocation function called in parent App component");
-    console.log("---------------------------------------------------------");
-    console.log("chosenPartyLocationMatch: ", chosenPartyLocationMatch);
+  // function handleChangeLocationInfo(chosenPartyLocationMatch) {
+  //   console.log("---------------------------------------------------------");
+  //   console.log("handleChangeLocation function called in parent App component");
+  //   console.log("---------------------------------------------------------");
+  //   console.log("chosenPartyLocationMatch: ", chosenPartyLocationMatch);
     // setLocationId(chosenLocationId);
     // setLocationIndex(chosenLocationIndex);
-  }
+  // }
 
   function handleEditLocation(editedLocation) {
     console.log("---------------------------------------------------------");
@@ -286,7 +288,6 @@ function App() {
           element={<Location 
             parties={parties} onFetchParties={handleFetchParties} onChooseParty={handleChooseParty} chosenParty={chosenParty}
             onAddLocation={handleAddLocation} onEditLocation={handleEditLocation} onDeleteLocation={handleDeleteLocation} 
-            locationOptions={locationOptions} onChangeLocationInfo={handleChangeLocationInfo}
           />}
         />
         <Route 
