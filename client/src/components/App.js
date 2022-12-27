@@ -92,15 +92,19 @@ function App() {
     let index = parties.map(party => party.name).indexOf(e.target.value)
 
     setPartyIndex(index);
-    
-    // Update the 'locations' so that the chosen party by the user only displays the specific location they can select from:
-    console.log("match: ", match);
-    console.log("index: ", index);
-    console.log("match.location: ", match.location);
-    console.log("match.location.name: ", match.location.name);
-    let location = match.location.name;
-    setLocation(location);
-    console.log("location: ", location);
+   
+    // NOTE:
+    // Adding use case scenario of when a location exists for the match, then update the location accordingly so I don't have to write two functions 
+    // to do the same thing:
+    if (match.location) {
+      console.log("match: ", match);
+      console.log("index: ", index);
+      console.log("match.location: ", match.location);
+      console.log("match.location.name: ", match.location.name);
+      let location = match.location.name;
+      setLocation(location);
+      console.log("location: ", location);
+    }
   }
 
   function handleAddItem(newItem) {
@@ -157,6 +161,8 @@ function App() {
     setItemOptions(filteredItemOptions);
   }
 
+  // TODO:
+  // Check why a new location isn't being updated automatically in the dropdown list fo "Edit Location" child component:
   // NEW TO CHECK:
   function handleAddLocation(newLocation) {
     console.log("---------------------------------------------------------");
