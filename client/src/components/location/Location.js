@@ -2,7 +2,7 @@ import React, {useEffect, useState } from "react";
 import AddLocationForm from "./AddLocationForm";
 import EditLocationForm from "./EditLocationForm";
 
-function Location({ parties, onFetchParties, onAddLocation, onEditLocation, onDeleteLocation, locationOptions, onChooseParty, chosenParty}) {
+function Location({ parties, onFetchParties, onAddLocation, onEditLocation, onDeleteLocation, location, onChooseParty, chosenParty}) {
     console.log("parties within Location child component: ", parties);
     useEffect(() => {
         fetch("/parties", {
@@ -51,7 +51,7 @@ function Location({ parties, onFetchParties, onAddLocation, onEditLocation, onDe
             {   
                 showEdit &&
                 <EditLocationForm 
-                    onEditLocation={onEditLocation} onDeleteLocation={onDeleteLocation} locationOptions={locationOptions}
+                    onEditLocation={onEditLocation} onDeleteLocation={onDeleteLocation} location={location}
                     parties={parties} onChooseParty={onChooseParty} chosenParty={chosenParty} 
                 />
             }

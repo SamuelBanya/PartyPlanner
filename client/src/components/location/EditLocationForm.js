@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import swal from "sweetalert";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
 
-function EditLocationForm({ onEditLocation, onDeleteLocation, parties, onChooseParty, chosenParty }) {
+function EditLocationForm({ location, onEditLocation, onDeleteLocation, parties, onChooseParty, chosenParty }) {
 
     const [editLocationFormData, setEditLocationFormData] = useState({
         location_name: ""
     });
 
+    console.log("location within EditLocationForm child component: ", location);
+
     // TODO: 
     // Use a 'useEffect' block that pulls in the form data each time the 'chosenParty' within the 'party/ChoosePartyDropdown' menu is changed:
     useEffect(() => {
-        console.log("chosenParty changed, reacting to this change with a useEffect block in EditLocationForm")
-        console.log("chosenParty.location: ", chosenParty.location);
-        setEditLocationFormData({location_name: chosenParty.location});
-        // setEditLocationFormData({...editLocationFormData, [location_name]: chosenParty.location});
+        // console.log("chosenParty changed, reacting to this change with a useEffect block in EditLocationForm")
+        // console.log("chosenParty.location: ", chosenParty.location);
+        // console.log("chosenParty.location.name: ", chosenParty.location.name);
+        setEditLocationFormData({location_name: location});
     }, [chosenParty]);
 
     const handleEditLocationChange = (e) => {

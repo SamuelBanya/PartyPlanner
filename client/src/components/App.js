@@ -27,9 +27,7 @@ function App() {
   const [itemOptions, setItemOptions] = useState([]);
   const [itemId, setItemId] = useState("");
   const [itemIndex, setItemIndex] = useState("");
-  const [locationOptions, setLocationOptions] = useState([]);
-  // const [locationId, setLocationId] = useState("");
-  // const [locationIndex, setLocationIndex] = useState("");
+  const [location, setLocation] = useState([]);
 
   useEffect(() => {
     // auto-login
@@ -100,9 +98,9 @@ function App() {
     console.log("index: ", index);
     console.log("match.location: ", match.location);
     console.log("match.location.name: ", match.location.name);
-    let locationOptions = (<option key={match.id} value={match.location.name}>{match.location.name}</option>)
-    setLocationOptions(locationOptions);
-    console.log("locationOptions: ", locationOptions);
+    let location = match.location.name;
+    setLocation(location);
+    console.log("location: ", location);
   }
 
   function handleAddItem(newItem) {
@@ -181,16 +179,9 @@ function App() {
         console.log("chosenParty.id: ", chosenParty.id);
         console.log("party.location: ", party.location);
         console.log("/////////////////////////////////////////////////////////");
-        // const updatedLocationArray = [...party.location, newLocation];
-        const updatedLocationArray = [party.location];
-
-        let locationOptions = updatedLocationArray.map((location) => {
-            return (
-                <option key={location.id} value={location.name}>{location.name}</option>
-            )
-        });
-        console.log("locationOptions: ", locationOptions);
-        setLocationOptions(locationOptions);
+        let location = chosenParty.location;
+        console.log("location: ", location);
+        setLocation(location);
         let tempArray = [...parties];
         console.log("tempArray: ", tempArray);
         console.log("tempArray[partyIndex]: ", tempArray[partyIndex]);
@@ -287,7 +278,7 @@ function App() {
           path="/location"
           element={<Location 
             parties={parties} onFetchParties={handleFetchParties} onChooseParty={handleChooseParty} chosenParty={chosenParty}
-            onAddLocation={handleAddLocation} onEditLocation={handleEditLocation} onDeleteLocation={handleDeleteLocation} 
+            onAddLocation={handleAddLocation} onEditLocation={handleEditLocation} onDeleteLocation={handleDeleteLocation} location={location}
           />}
         />
         <Route 
