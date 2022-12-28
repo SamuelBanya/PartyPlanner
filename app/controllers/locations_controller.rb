@@ -6,6 +6,7 @@ class LocationsController < ApplicationController
     end
 
     def update
+        byebug
         location = Location.find_by(id: params[:locationId])
         if location.user_id == @current_user.id
             # TODO:
@@ -20,7 +21,8 @@ class LocationsController < ApplicationController
     end
 
     def index 
-        locations = @current_user.locations.all
+        # locations = @current_user.locations.all
+        locations = Location.all
 
         if session[:user_id]
             render json: locations
@@ -30,7 +32,9 @@ class LocationsController < ApplicationController
     end
 
     def show
-        location = @current_user.locations.find_by(id: params[:id])
+        # location = @current_user.location.find_by(id: params[:id])
+        # location = Location.find_by(id: params[:id])
+        location = Location.find_by(id: params[:locationId])
         if location 
             render json: location
         else
@@ -39,7 +43,9 @@ class LocationsController < ApplicationController
     end
 
     def destroy
-        location = @current_user.locations.find_by(id: params[:id])
+        # location = @current_user.locations.find_by(id: params[:id])
+        # location = Location.find_by(id: params[:id])
+        location = Location.find_by(id: params[:locationId])
         if location.user_id == @current_user.id
             location.destroy
             head :no_content

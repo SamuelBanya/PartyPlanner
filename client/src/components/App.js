@@ -223,24 +223,21 @@ function App() {
     // setLocationIndex(chosenLocationIndex);
   // }
 
-  function handleEditLocation(editedLocation) {
+  function handleEditLocation(editedLocation, locationId) {
     console.log("---------------------------------------------------------");
     console.log("handleEditLocation function called in parent App component");
     console.log("---------------------------------------------------------");
     console.log("editedLocation: ", editedLocation);
+    console.log("locationId: ", locationId);
     console.log("parties: ", parties);
     console.log("chosenParty: ", chosenParty);
-    // let tempArray = [...parties];
-    // tempArray[partyIndex].location[locationIndex] = editedLocation;
-    // setParties(tempArray);
-
-    // let locationOptions = chosenParty.location.map((location) => {
-    //   return (
-    //       <option key={location.id} value={location.name}>{location.name}</option>
-    //   )
-    // });
-
-    // setLocationOptions(locationOptions);
+    let tempArray = [...parties];
+    console.log("tempArray[partyIndex]: ", tempArray[partyIndex]);
+    console.log("tempArray[partyIndex].location: ", tempArray[partyIndex].location);
+    tempArray[partyIndex].location = editedLocation;
+    setParties(tempArray);
+    // MAYBE
+    setLocation(editedLocation);
   }
 
   function handleDeleteLocation(response, deletedLocationId) {
