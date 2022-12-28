@@ -6,7 +6,7 @@ class LocationsController < ApplicationController
     end
 
     def update
-        byebug
+        # byebug
         location = Location.find_by(id: params[:locationId])
         if location.user_id == @current_user.id
             # TODO:
