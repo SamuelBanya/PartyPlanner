@@ -50,7 +50,10 @@ class PartiesController < ApplicationController
     private 
     
     def party_params
-        params.permit(:name, :start_time, :end_time)
+        # params.permit(:name, :start_time, :end_time)
+        # NOTE:
+        # Attempt to figure out how to incorporate 'location'
+        params.permit(:name, :start_time, :end_time, :location)
     end
 end
 

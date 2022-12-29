@@ -7,17 +7,25 @@ class LocationsController < ApplicationController
 
     def update
         # byebug
-        location = Location.find_by(id: params[:locationId])
-        if location.user_id == @current_user.id
-            # TODO:
-            # Figure out why the location isn't being updated accordingly:
-            # byebug
+        location = Party.find_by(id: params[:party_id]).location
+        if location.user_id == @current_user.id 
             # location.update(location_params)
-            location.update(user_id: @current_user.id, party_id: params[:party_id], name: params[:name])
+            location.update(name: params[:name])
             render json: location
         else
             render json: { errors: [location.errors.full_messages] }, status: :unprocessable_entity
         end
+        # location = Location.find_by(id: params[:locationId])
+        # if location.user_id == @current_user.id
+        #     # TODO:
+        #     # Figure out why the location isn't being updated accordingly:
+        #     # byebug
+        #     # location.update(location_params)
+        #     location.update(user_id: @current_user.id, party_id: params[:party_id], name: params[:name])
+        #     render json: location
+        # else
+        #     render json: { errors: [location.errors.full_messages] }, status: :unprocessable_entity
+        # end
     end
 
     def index 
