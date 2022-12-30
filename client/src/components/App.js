@@ -84,6 +84,8 @@ function App() {
     );
   }
 
+  // TODO:
+  // Check to see if a party's location is blank, then just set 'location' to a blank string and send it down to whatever child needs it
   function handleChooseParty(e) {
     console.log("handleChooseParty function called");
     const match = parties.find(item => item.name == e.target.value);
