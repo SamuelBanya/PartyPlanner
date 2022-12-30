@@ -14,12 +14,24 @@ function Summary({ parties, onFetchParties }) {
             onFetchParties(data);
         });
     }, []);
+
     let partyResults = parties.map((party) => {
         let partyItems = party.items.map((item) => {
             return (
                 <li key={item.id}>{item.name}</li>
             )
         })
+
+        // NOTE: I used this StackOverflow post as a reference to utilize 'Object.keys().length' to determine the length of the object:
+        // https://stackoverflow.com/questions/126100/how-to-efficiently-count-the-number-of-keys-properties-of-an-object-in-javascrip
+        let partyLocation = (<li></li>)
+        if (party.location) {
+            if (Object.keys(party.location).length > 0) {
+                partyLocation = (
+                    <li key={party.location.id}>{party.location.name}</li>
+                )
+            }
+        }
 
         let usersArray = [];
 
@@ -39,6 +51,10 @@ function Summary({ parties, onFetchParties }) {
                 <ul>
                     <li>{party.name}</li>
                     <ul>
+                        <li>Location</li>
+                        <ul>
+                            {partyLocation}
+                        </ul>
                         <li>Start Time</li>
                         <ul>
                             {party.start_time}
