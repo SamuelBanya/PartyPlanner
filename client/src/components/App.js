@@ -252,8 +252,10 @@ function App() {
     let tempArray = [...parties];
     console.log("tempArray: ", tempArray);
     console.log("tempArray[partyIndex].location: ", tempArray[partyIndex].location);
-    // tempArray[partyIndex].location.splice(locationIndex, 1)
-    // setParties(tempArray);
+    tempArray[partyIndex].location = null
+    console.log("tempArray after setting the location to 'null' since its been deleted: ", tempArray);
+    setParties(tempArray);
+    setLocation("");
 
     // let filteredLocationOptions = chosenParty.location.map((location) => {
     //     return (

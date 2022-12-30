@@ -52,7 +52,8 @@ class LocationsController < ApplicationController
 
     def destroy
         # byebug
-        location = Party.find_by(id: params[:party_id]).location
+        # location = Party.find_by(id: params[:party_id]).location
+        location = Location.find_by(id: params[:locationId])
         if location.user_id == @current_user.id 
             location.destroy
             head :no_content

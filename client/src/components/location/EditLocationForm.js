@@ -13,12 +13,33 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
     // TODO: 
     // Use a 'useEffect' block that pulls in the form data each time the 'chosenParty' within the 'party/ChoosePartyDropdown' menu is changed:
     useEffect(() => {
-        // console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
-        // console.log("chosenParty changed, reacting to this change with a useEffect block in EditLocationForm");
-        // console.log("location: ", location);
-        setEditLocationFormData({location_name: location});
-        // console.log("editLocationFormData after useEffect: ", editLocationFormData);
-        // console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+        console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+        console.log("chosenParty changed, reacting to this change with a useEffect block in EditLocationForm");
+        if (location.length === 0) {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            console.log("if block reached");
+            console.log("location's length is less than 0");
+            console.log("location: ", location);
+            console.log("location.length: ", location.length);
+            console.log("location: ", location);
+            console.log("Party doesn't have a location, setting location to a blank string");
+            setEditLocationFormData({location_name: ""});
+            console.log("editLocationFormData after useEffect: ", editLocationFormData);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        }
+        else {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            console.log("else block reached");
+            console.log("location's length is greater than 0");
+            console.log("location: ", location);
+            console.log("location.length: ", location.length);
+            console.log("Party has a location, setting location to the actual location");
+            setEditLocationFormData({location_name: location});
+            console.log("editLocationFormData after useEffect: ", editLocationFormData);
+            console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        }
+        // 
     }, [chosenParty]);
     
     console.log("editLocationFormData outside useEffect: ", editLocationFormData);
