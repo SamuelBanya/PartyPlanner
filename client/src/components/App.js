@@ -84,11 +84,11 @@ function App() {
     );
   }
 
-  // TODO:
-  // Check to see if a party's location is blank, then just set 'location' to a blank string and send it down to whatever child needs it
   function handleChooseParty(e) {
-    console.log("handleChooseParty function called");
+    // console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
+    // console.log("handleChooseParty function called");
     const match = parties.find(item => item.name == e.target.value);
+    // console.log("match: ", match);
 
     setChosenParty(match);
 
@@ -100,10 +100,10 @@ function App() {
     // Adding use case scenario of when a location exists for the match, then update the location accordingly so I don't have to write two functions 
     // to do the same thing:
     if (match.location) {
-      console.log("match: ", match);
-      console.log("index: ", index);
-      console.log("match.location: ", match.location);
-      console.log("match.location.name: ", match.location.name);
+      // console.log("match: ", match);
+      // console.log("index: ", index);
+      // console.log("match.location: ", match.location);
+      // console.log("match.location.name: ", match.location.name);
       let location = match.location.name;
       let locationId = match.location.id;
       // NOTE: 
@@ -111,8 +111,15 @@ function App() {
       setLocation(location);
       // Then, set the 'locationId' for its specific 'id' value to later use a PATCH request for editing, and a 'DELETE' request for deleting
       setLocationId(locationId);
-      console.log("location: ", location);
+      // console.log("location: ", location);
     }
+    else {
+      // console.log("else block reached within handleChooseParty function");
+      // console.log("match: ", match)
+      // console.log("match.location: ", match.location)
+      setLocation("");
+    }
+    // console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
   }
 
   function handleAddItem(newItem) {
