@@ -240,11 +240,18 @@ function App() {
     setLocation(editedLocation);
   }
 
-  function handleDeleteLocation(response, deletedLocationId) {
+  // function handleDeleteLocation(response, deletedLocationId) {
+  function handleDeleteLocation(response, locationId) {
     console.log("---------------------------------------------------------");
     console.log("handleDeleteLocation function called in parent App component");
     console.log("---------------------------------------------------------");
-    // let tempArray = [...parties];
+    console.log("parties: ", parties);
+    console.log("response: ", response);
+    // console.log("deletedLocationId: ", deletedLocationid);
+    console.log("locationId: ", locationId);
+    let tempArray = [...parties];
+    console.log("tempArray: ", tempArray);
+    console.log("tempArray[partyIndex].location: ", tempArray[partyIndex].location);
     // tempArray[partyIndex].location.splice(locationIndex, 1)
     // setParties(tempArray);
 

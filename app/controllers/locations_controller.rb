@@ -51,12 +51,13 @@ class LocationsController < ApplicationController
     end
 
     def destroy
-        # location = @current_user.locations.find_by(id: params[:id])
-        # location = Location.find_by(id: params[:id])
-        location = Location.find_by(id: params[:locationId])
-        if location.user_id == @current_user.id
+        # byebug
+        location = Party.find_by(id: params[:party_id]).location
+        if location.user_id == @current_user.id 
             location.destroy
             head :no_content
+        else
+            render json: { error: "Bad request, cannot be deleted" }, status: 400
         end
     end
 

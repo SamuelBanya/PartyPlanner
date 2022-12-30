@@ -60,15 +60,20 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
         e.preventDefault();
         const partyId = chosenParty.id;
 
-        // fetch(`/parties/${partyId}/location/${locationId}`, {
-        //     method: "DELETE",
-        // })
-        // .then((response) => {
-        //     if (response.ok) {
-        //         onDeleteLocation(response, locationId);
-        //         swal("Location deleted!");
-        //     }
-        // })
+        fetch(`/parties/${partyId}/location`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({"name": editLocationFormData["location_name"], "party_id": partyId, "locationId": locationId}),
+        })
+        .then((response) => {
+            if (response.ok) {
+                onDeleteLocation(response, locationId);
+                swal("Location deleted!");
+            }
+        })
     }
 
     return (
