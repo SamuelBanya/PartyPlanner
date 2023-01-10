@@ -9,10 +9,5 @@
     "clean": "rm -rf public",
     "deploy": "cp -a client/build/. public/",
     "heroku-postbuild": "npm run clean && npm run build && npm run deploy"
-  },
-  "dependencies": {
-    "leaflet": "^1.9.3",
-    "react-leaflet": "^4.2.0",
-    "sweet-alert": "^2.0.5"
   }
 }
