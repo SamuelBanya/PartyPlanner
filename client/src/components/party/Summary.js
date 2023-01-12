@@ -56,7 +56,24 @@ import Geocode from "react-geocode";
 // With a Google Maps API key, you should be fine to use it cleartext AFAIK, presuming you're using it to display Google Maps embeds. 
 // The web browser needs to include the API key in its requests to Google, so you can't keep it secret. 
 
-
+// Obtaining Geocoder results via 'async' function attempt:
+async function get_coordinates (name) {
+    return await Geocode.fromAddress(name).then(
+        (response) => {
+            console.log("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+            console.log("Within async function, get_coordinates: ")
+            const { lat, lng } = response.results[0].geometry.location;
+            console.log("lat: ", lat);
+            console.log("lng: ", lng);
+            console.log( "object version: ", { lat: lat, lng: lng });
+            // console.log(lat, lng);
+            // return { "lat": lat, "lng": lng}
+            return { lat: lat, lng: lng }
+        },
+        (error) => {
+        console.error(error);
+        }
+)}
 
 function Summary({ parties, onFetchParties }) {
     // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
@@ -202,34 +219,18 @@ function Summary({ parties, onFetchParties }) {
                 //     }
                 // )};
 
-
-                // Obtaining Geocoder results via 'async' function attempt:
-                async function get_coordinates (name) {
-                    return await Geocode.fromAddress(party.location.name).then(
-                        (response) => {
-                            // PREVIOUS LINE:
-                            const { lat, lng } = response.results[0].geometry.location;
-                            console.log("Within the 'newMarker section of the code: ");
-                            console.log("lat: ", lat);
-                            console.log("lng: ", lng);
-                            // console.log(lat, lng);
-                            // return { "lat": lat, "lng": lng}
-                            return { lat: lat, lng: lng }
-                        },
-                        (error) => {
-                        console.error(error);
-                        }
-                )}
-
                 let newMarker = { id: party.location.id, name: party.location.name, position: get_coordinates(party.location.name) };
 
                 // Then, add the 'marker' object to the 'markers' array with '.push'
-                markers.push(newMarker);
                 console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
+                console.log("Before .push:");
+                console.log("markers: ", markers);
+                console.log("newMarker: ", newMarker);
+                markers.push(newMarker);
                 console.log("After .push:");
                 console.log("markers: ", markers);
                 console.log("newMarker: ", newMarker);
-
+                console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
 
                 // Previous working code for working example:
                 // const markers = [
@@ -313,7 +314,13 @@ function Summary({ parties, onFetchParties }) {
                     center={centers[0]}
                     zoom={10}
                 >
-                    {markers.map(({ id, name, position }) => (
+                    {markers.map(({ id, name, position }) => {
+                    console.log("---------------------------------------------");
+                    console.log("Checking markers.map at end of JSX statement:");
+                    console.log("id: ", id);
+                    console.log("name: ", name);
+                    console.log("position: ", position);
+                    return (
                         <Marker
                         key={id}
                         position={position}
@@ -325,7 +332,7 @@ function Summary({ parties, onFetchParties }) {
                             </InfoWindow>
                         ) : null}
                         </Marker>
-                    ))}
+                    )})}
                 </GoogleMap>
             </LoadScript>
         </>
