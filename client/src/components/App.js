@@ -91,23 +91,17 @@ function App() {
       }
   ).then((response) => {
     return response;
-  })
-  }
+  })}
 
-  // NOTE: This is a 'Summary' page specific version since we want to add longitude and latitude values only specific to the map page
-  // and don't need it added to the existing backend data:
-  // PREVIOUS LINE:
-  function handleFetchSummaryParties(fetchedParties) {
-  // NOTE: Wrapping this in an 'async' block to allow for 'await' to be used later on due to this StackOverflow post:
-  // https://stackoverflow.com/questions/66486903/top-level-await-expressions-are-only-allowed-when-the-module-option-is-set-t
-    let modifiedParties = [];
+  // MODIFIED VERSION OF FUNCTION:
+  async function handleFetchSummaryParties(fetchedParties) {
     console.log("handleFetchSummaryParties function called in parent App component");
     console.log("fetchedParties: ", fetchedParties);
 
     // Loop through each party and check to see if it has a location
     // If it has a location, then run the 'get_coordinates' function to its actual 'lat' and 'lng' values accordingly so that we can 
     // later use them for the map on the summary page:
-    fetchedParties.map((party) => {
+    const promises = fetchedParties.map(async (party) => {
       console.log("Inside .map for fetchedParties within handleFetchSummaryParties function in parent App.js component");
       console.log("party: ", party);
       if (party.location) {
@@ -115,21 +109,22 @@ function App() {
         console.log("party.location: ", party.location);
         console.log("party.location.name: ", party.location.name);
         console.log("Now calling the get_coordinates function to obtain the lat and lng for use on the Summary page's map!");
-        // PREVIOUS LINE
-        let position = get_coordinates(party.location.name);
+        let position = await get_coordinates(party.location.name);
         console.log("position object: ", position);
         console.log("party.location: ", party.location);
         console.log("typeof(party.location): ", typeof(party.location));
-        party.location["position"] = position
-        // party.location.push(position)
-        modifiedParties.push(party)
-      } else {
-        modifiedParties.push(party)
+        
+        return {...party, location: {...party.location, position: position}};
+      } 
+      else {
+        return party;
       }
-    })
+    });
+
+    const modifiedParties = await Promise.all( promises );
 
     console.log("modifiedParies after .map() section: ", modifiedParties);
-    setParties(fetchedParties)
+    setParties(modifiedParties);
     console.log("parties within handleFetchSummaryParties function in parent App component: ", parties);
   }
 
