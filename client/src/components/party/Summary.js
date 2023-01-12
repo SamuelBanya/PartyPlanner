@@ -1,6 +1,146 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState, Component } from "react";
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { Marker } from '@react-google-maps/api';
+import { InfoWindow } from '@react-google-maps/api';
+import Geocode from "react-geocode";
+
+// Links on how to protect the Google Maps API key:
+// https://medium.com/@muesingb/a-simple-guide-to-hiding-api-keys-in-rails-and-react-using-environment-variables-abc6199f487e
+// https://medium.com/@daniaherrera/how-to-use-dotenv-ruby-gem-to-secure-your-api-keys-92382aab888a
+// https://medium.com/swlh/an-easy-way-to-manually-hide-an-api-key-in-a-simple-rails-app-317ca1f823a8
+
+// Related Google Maps package from npm:
+// https://www.npmjs.com/package/@react-google-maps/api
+
+// Related links on how to setup Google Map API:
+// https://developers.google.com/maps/documentation/embed/cloud-setup
+// https://console.cloud.google.com/google/maps-apis/overview
+// https://developers.google.com/maps/documentation/javascript/react-map#javascript
+
+// Related links to use to reverse search for 'latitude' and 'longitude' given the city name:
+// http://www.geonames.org/export/ws-overview.html
+// https://www.geonames.org/maps/addresses.html#geoCodeAddress
+
+// GOOGLE MAPS EXAMPLE //
+// From this Docs page:
+// https://react-google-maps-api-docs.netlify.app/
+// Also this is an example to use:
+// https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
+
+// Google Maps Example With Custom Colors For 'Markers' (aka 'pins' to an everyday person):
+// https://stackoverflow.com/questions/27488643/google-maps-v3-default-marker-path-with-other-colors
+
+// Example of how to add a flag icon to a map:
+// https://developers.google.com/maps/documentation/javascript/examples/icon-simple
+
+// Older vanilla JS example on how to add 'InfoWindow' objects to a Google Maps app:
+// http://users.umiacs.umd.edu/~louiqa/2014/BMGT406/novel-project-tutorial/novel-google-maps-javascript.html
+
+// Example from the 'InfoWindows' docs page on how to add an 'InfoWindow' to an existing 'Marker' through a click event:
+// https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
+
+// GEOCODING LINKS:
+// 'search-geonames' package to search 'geonames' data:
+// https://www.npmjs.com/package/search-geonames
+// 'react-geocode' package to use Google's Geocoding service:
+// https://www.npmjs.com/package/react-geocode
+// Google docs pages on 'geocoding':
+// https://developers.google.com/maps/documentation/javascript/geocoding
+// https://developers.google.com/maps/documentation/geocoding/overview
+
+// Advice Notes:
+// If you haven't seen it already, Rails has a built-in secrets store that you can also use: https://guides.rubyonrails.org/security.html#custom-credentials
+// With a Google Maps API key, you should be fine to use it cleartext AFAIK, presuming you're using it to display Google Maps embeds. 
+// The web browser needs to include the API key in its requests to Google, so you can't keep it secret. 
 
 function Summary({ parties, onFetchParties }) {
+    // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
+    const containerStyle = {
+    width: '400px',
+    height: '400px'
+    };
+
+    const centers = [{
+        // Lebanon, Kansas: The geographic center of the U.S.:
+        lat: 39.8097,
+        lng: -98.5556
+    }]
+
+    const position = { lat: 39.8097, lng: -98.5556 }
+
+    // GOOGLE MAPS EXAMPLE //
+    // Adapted from this example:
+    // https://codesandbox.io/s/react-google-mapsapi-multiple-markers-infowindow-h6vlq?file=/src/Map.js:1109-1484
+
+    // TODO:
+    // Make markers from each of the user provided locations:
+    // Then, grab the 'lat' and 'lng' for each of them
+    // Then, display them on the map
+    const markers = [
+    {
+        id: 1,
+        name: "Chicago, Illinois",
+        position: { lat: 41.881832, lng: -87.623177 }
+    },
+    {
+        id: 2,
+        name: "Denver, Colorado",
+        position: { lat: 39.739235, lng: -104.99025 }
+    },
+    {
+        id: 3,
+        name: "Los Angeles, California",
+        position: { lat: 34.052235, lng: -118.243683 }
+    },
+    {
+        id: 4,
+        name: "New York, New York",
+        position: { lat: 40.712776, lng: -74.005974 }
+    }
+    ];
+
+    const [activeMarker, setActiveMarker] = useState(null);
+
+    const handleActiveMarker = (marker) => {
+        if (marker === activeMarker) {
+        return;
+        }
+        setActiveMarker(marker);
+    };
+    // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
+
+    // ----------------------------'react-geocode' EXAMPLE----------------------------'
+
+    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
+    Geocode.setLanguage("en");
+    Geocode.setLocationType("ROOFTOP");
+    Geocode.fromAddress("Eiffel Tower").then(
+    (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+    },
+    (error) => {
+        console.error(error);
+    }
+    );
+    // ----------------------------'react-geocode' EXAMPLE----------------------------'
+
+    // Mapping through each of the 'markers' to obtain the corresponding 'lat' and 'lng' values for later use on the map itself:
+    markers.map((marker) => {
+        console.log("TESTING GEOCODER RESULTS TO OBTAIN LAT AND LNG FOR MAP: ");
+        console.log("marker: ", marker);
+        Geocode.fromAddress(marker.name)
+        .then((response) => {
+            const { lat, lng } = response.results[0].geometry.location;
+            console.log("Longitude and Latitude of " + marker.name + ": ");
+            console.log(lat, lng);
+        },
+        (error) => {
+            console.error(error);
+        }
+        );
+    });
+
     useEffect(() => {
         fetch("/parties", {
         method: "GET",
@@ -81,6 +221,29 @@ function Summary({ parties, onFetchParties }) {
         <>
             <h1>Summary</h1>
             { partyResults }
+            <LoadScript
+                googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
+            >
+                <GoogleMap
+                    mapContainerStyle={containerStyle}
+                    center={centers[0]}
+                    zoom={10}
+                >
+                    {markers.map(({ id, name, position }) => (
+                        <Marker
+                        key={id}
+                        position={position}
+                        onClick={() => handleActiveMarker(id)}
+                        >
+                        {activeMarker === id ? (
+                            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                            <div>{name}</div>
+                            </InfoWindow>
+                        ) : null}
+                        </Marker>
+                    ))}
+                </GoogleMap>
+            </LoadScript>
         </>
     )
 
