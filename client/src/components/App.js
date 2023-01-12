@@ -7,6 +7,7 @@ import Party from "./party/Party";
 import Item from "./item/Item";
 import Location from "./location/Location";
 import Summary from "./party/Summary";
+import Geocode from "react-geocode";
 
 function App() {
   // TODO:
@@ -63,6 +64,64 @@ function App() {
     console.log("fetchedParties: ", fetchedParties);
     setParties(fetchedParties)
     console.log("parties within handleFetchParties function in parent App component: ", parties);
+  }
+
+  // NOTE: This function is necessary to obtain the 'lat' (latitude) and 'lng' (longitude) to later display the proper
+  // marker positions for the map on the 'Summary' page:
+  async function get_coordinates (name) {
+    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
+    Geocode.setLanguage("en");
+    Geocode.setLocationType("ROOFTOP");
+    return await Geocode.fromAddress(name).then(
+      (response) => {
+        console.log("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+        console.log("Within async function, get_coordinates: ")
+        const { lat, lng } = response.results[0].geometry.location;
+        let position = { lat: lat, lng: lng }
+        console.log("lat: ", lat);
+        console.log("lng: ", lng);
+        console.log("position object: ", position);
+
+        return position
+      },
+      (error) => {
+        console.error(error);
+      }
+  )}
+
+  // NOTE: This is a 'Summary' page specific version since we want to add longitude and latitude values only specific to the map page
+  // and don't need it added to the existing backend data:
+  function handleFetchSummaryParties(fetchedParties) {
+    let modifiedParties = [];
+    console.log("handleFetchSummaryParties function called in parent App component");
+    console.log("fetchedParties: ", fetchedParties);
+
+    // Loop through each party and check to see if it has a location
+    // If it has a location, then run the 'get_coordinates' function to its actual 'lat' and 'lng' values accordingly so that we can 
+    // later use them for the map on the summary page:
+    fetchedParties.map((party) => {
+      console.log("Inside .map for fetchedParties within handleFetchSummaryParties function in parent App.js component");
+      console.log("party: ", party);
+      if (party.location) {
+        console.log("Given party has a location!")
+        console.log("party.location: ", party.location);
+        console.log("party.location.name: ", party.location.name);
+        console.log("Now calling the get_coordinates function to obtain the lat and lng for use on the Summary page's map!");
+        let position = get_coordinates(party.location.name);
+        console.log("position object: ", position);
+        console.log("party.location: ", party.location);
+        console.log("typeof(party.location): ", typeof(party.location));
+        party.location["position"] = position
+        // party.location.push(position)
+        modifiedParties.push(party)
+      } else {
+        modifiedParties.push(party)
+      }
+    })
+
+    console.log("modifiedParies after .map() section: ", modifiedParties);
+    setParties(fetchedParties)
+    console.log("parties within handleFetchSummaryParties function in parent App component: ", parties);
   }
 
   function handleAddParty(newParty) {
@@ -315,7 +374,9 @@ function App() {
         />
         <Route 
           path="/summary" 
-          element={<Summary parties={parties} onFetchParties={handleFetchParties} />}
+          // PREVIOUS LINE:
+          // element={<Summary parties={parties} onFetchParties={handleFetchParties} />}
+          element={<Summary parties={parties} onFetchSummaryParties={handleFetchSummaryParties} />}
         />
       </Routes>
     </>

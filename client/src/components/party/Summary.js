@@ -55,25 +55,27 @@ import Geocode from "react-geocode";
 // Utilize advice that was given to me:
 //  Make sure that the result of the async operation in the 'get_coordinates' function ends up in useEffect() if it is intended to change what is actually rendered
 // Obtaining Geocoder results via 'async' function attempt:
-async function get_coordinates (name) {
-    return await Geocode.fromAddress(name).then(
-        (response) => {
-            console.log("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
-            console.log("Within async function, get_coordinates: ")
-            const { lat, lng } = response.results[0].geometry.location;
-            console.log("lat: ", lat);
-            console.log("lng: ", lng);
-            console.log( "object version: ", { lat: lat, lng: lng });
-            // console.log(lat, lng);
-            // return { "lat": lat, "lng": lng}
-            return { lat: lat, lng: lng }
-        },
-        (error) => {
-        console.error(error);
-        }
-)}
+// async function get_coordinates (name) {
+//     return await Geocode.fromAddress(name).then(
+//         (response) => {
+//             console.log("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+//             console.log("Within async function, get_coordinates: ")
+//             const { lat, lng } = response.results[0].geometry.location;
+//             console.log("lat: ", lat);
+//             console.log("lng: ", lng);
+//             console.log( "object version: ", { lat: lat, lng: lng });
+//             // console.log(lat, lng);
+//             // return { "lat": lat, "lng": lng}
+//             return { lat: lat, lng: lng }
+//         },
+//         (error) => {
+//         console.error(error);
+//         }
+// )}
 
-function Summary({ parties, onFetchParties }) {
+// PREVIOUS LINE:
+// function Summary({ parties, onFetchParties }) {
+function Summary({ parties, onFetchSummaryParties }) {
     // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
     const containerStyle = {
     width: '400px',
@@ -99,30 +101,31 @@ function Summary({ parties, onFetchParties }) {
 
     // NOTE: 
     // Commented out since its working for the actual example, but I need it working for my actual locations:
-    // const markers = [
-    // {
-    //     id: 1,
-    //     name: "Chicago, Illinois",
-    //     position: { lat: 41.881832, lng: -87.623177 }
-    // },
-    // {
-    //     id: 2,
-    //     name: "Denver, Colorado",
-    //     position: { lat: 39.739235, lng: -104.99025 }
-    // },
-    // {
-    //     id: 3,
-    //     name: "Los Angeles, California",
-    //     position: { lat: 34.052235, lng: -118.243683 }
-    // },
-    // {
-    //     id: 4,
-    //     name: "New York, New York",
-    //     position: { lat: 40.712776, lng: -74.005974 }
-    // }
-    // ];
+    const markers = [
+    {
+        id: 1,
+        name: "Chicago, Illinois",
+        position: { lat: 41.881832, lng: -87.623177 }
+    },
+    {
+        id: 2,
+        name: "Denver, Colorado",
+        position: { lat: 39.739235, lng: -104.99025 }
+    },
+    {
+        id: 3,
+        name: "Los Angeles, California",
+        position: { lat: 34.052235, lng: -118.243683 }
+    },
+    {
+        id: 4,
+        name: "New York, New York",
+        position: { lat: 40.712776, lng: -74.005974 }
+    }
+    ];
 
-    let markers = []
+    // NOTE: Commented out for now to work on parent App.js's related function to pull more data for lat and lng for locations
+    // let markers = []
 
     const [activeMarker, setActiveMarker] = useState(null);
 
@@ -136,18 +139,19 @@ function Summary({ parties, onFetchParties }) {
 
     // ----------------------------'react-geocode' EXAMPLE----------------------------'
 
-    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
-    Geocode.setLanguage("en");
-    Geocode.setLocationType("ROOFTOP");
-    Geocode.fromAddress("Eiffel Tower").then(
-    (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
-    },
-    (error) => {
-        console.error(error);
-    }
-    );
+    // NOTE: Commented out to force this to work in the parent App.js component:
+    // Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
+    // Geocode.setLanguage("en");
+    // Geocode.setLocationType("ROOFTOP");
+    // Geocode.fromAddress("Eiffel Tower").then(
+    // (response) => {
+    //     const { lat, lng } = response.results[0].geometry.location;
+    //     console.log(lat, lng);
+    // },
+    // (error) => {
+    //     console.error(error);
+    // }
+    // );
     // ----------------------------'react-geocode' EXAMPLE----------------------------'
 
     // PREVIOUS LINES USING PREVIOUS EXAMPLE WITH PREDETERMINED LOCATIONS:
@@ -179,7 +183,9 @@ function Summary({ parties, onFetchParties }) {
         // TODO: Possibly place the 'get_coordinates' function of grabbing the locations within the parent instead, and utilize the 'location_id'
         // so that you can easily utilize the same returned list later on when its done with its fetching:
         .then((data) => {
-            onFetchParties(data);
+            // PREVIOUS LINE:
+            // onFetchParties(data);
+            onFetchSummaryParties(data);
         });
     }, []);
 
@@ -220,18 +226,18 @@ function Summary({ parties, onFetchParties }) {
                 //     }
                 // )};
 
-                let newMarker = { id: party.location.id, name: party.location.name, position: get_coordinates(party.location.name) };
+                // let newMarker = { id: party.location.id, name: party.location.name, position: get_coordinates(party.location.name) };
 
                 // Then, add the 'marker' object to the 'markers' array with '.push'
-                console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
-                console.log("Before .push:");
-                console.log("markers: ", markers);
-                console.log("newMarker: ", newMarker);
-                markers.push(newMarker);
-                console.log("After .push:");
-                console.log("markers: ", markers);
-                console.log("newMarker: ", newMarker);
-                console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
+                // console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
+                // console.log("Before .push:");
+                // console.log("markers: ", markers);
+                // console.log("newMarker: ", newMarker);
+                // markers.push(newMarker);
+                // console.log("After .push:");
+                // console.log("markers: ", markers);
+                // console.log("newMarker: ", newMarker);
+                // console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
 
                 // Previous working code for working example:
                 // const markers = [
