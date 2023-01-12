@@ -56,6 +56,8 @@ import Geocode from "react-geocode";
 // With a Google Maps API key, you should be fine to use it cleartext AFAIK, presuming you're using it to display Google Maps embeds. 
 // The web browser needs to include the API key in its requests to Google, so you can't keep it secret. 
 
+
+
 function Summary({ parties, onFetchParties }) {
     // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
     const containerStyle = {
@@ -79,28 +81,33 @@ function Summary({ parties, onFetchParties }) {
     // Make markers from each of the user provided locations:
     // Then, grab the 'lat' and 'lng' for each of them
     // Then, display them on the map
-    const markers = [
-    {
-        id: 1,
-        name: "Chicago, Illinois",
-        position: { lat: 41.881832, lng: -87.623177 }
-    },
-    {
-        id: 2,
-        name: "Denver, Colorado",
-        position: { lat: 39.739235, lng: -104.99025 }
-    },
-    {
-        id: 3,
-        name: "Los Angeles, California",
-        position: { lat: 34.052235, lng: -118.243683 }
-    },
-    {
-        id: 4,
-        name: "New York, New York",
-        position: { lat: 40.712776, lng: -74.005974 }
-    }
-    ];
+
+    // NOTE: 
+    // Commented out since its working for the actual example, but I need it working for my actual locations:
+    // const markers = [
+    // {
+    //     id: 1,
+    //     name: "Chicago, Illinois",
+    //     position: { lat: 41.881832, lng: -87.623177 }
+    // },
+    // {
+    //     id: 2,
+    //     name: "Denver, Colorado",
+    //     position: { lat: 39.739235, lng: -104.99025 }
+    // },
+    // {
+    //     id: 3,
+    //     name: "Los Angeles, California",
+    //     position: { lat: 34.052235, lng: -118.243683 }
+    // },
+    // {
+    //     id: 4,
+    //     name: "New York, New York",
+    //     position: { lat: 40.712776, lng: -74.005974 }
+    // }
+    // ];
+
+    let markers = []
 
     const [activeMarker, setActiveMarker] = useState(null);
 
@@ -173,6 +180,80 @@ function Summary({ parties, onFetchParties }) {
                 partyLocation = (
                     <li key={party.location.id}>{party.location.name}</li>
                 )
+                // TODO:
+                // Create new 'marker' object for the map here
+                // Provide the 'party.location.id' as the 'id' value
+                // Provide the 'party.location.name' for the 'name' value
+                // Use the 'Geocoder' fetch call to obtain the correct longitude and latitude results for each of the locations --> This might be tricky since they might not be received in time
+                // PREVIOUS LINE
+                // let newMarker = { id: party.location.id, name: party.location.name, position: Geocode.fromAddress("Eiffel Tower").then(
+                // SECOND PREVIOUS LINES
+                // let newMarker = { id: party.location.id, name: party.location.name, position: Geocode.fromAddress(party.location.name).then(
+                //     (response) => {
+                //         const { lat, lng } = response.results[0].geometry.location;
+                //         console.log("Within the 'newMarker section of the code: ");
+                //         console.log("lat: ", lat);
+                //         console.log("lng: ", lng);
+                //         console.log(lat, lng);
+                //         return { lat: lat, lng: lng }
+                //     },
+                //     (error) => {
+                //     console.error(error);
+                //     }
+                // )};
+
+
+                // Obtaining Geocoder results via 'async' function attempt:
+                async function get_coordinates (name) {
+                    return await Geocode.fromAddress(party.location.name).then(
+                        (response) => {
+                            // PREVIOUS LINE:
+                            const { lat, lng } = response.results[0].geometry.location;
+                            console.log("Within the 'newMarker section of the code: ");
+                            console.log("lat: ", lat);
+                            console.log("lng: ", lng);
+                            // console.log(lat, lng);
+                            // return { "lat": lat, "lng": lng}
+                            return { lat: lat, lng: lng }
+                        },
+                        (error) => {
+                        console.error(error);
+                        }
+                )}
+
+                let newMarker = { id: party.location.id, name: party.location.name, position: get_coordinates(party.location.name) };
+
+                // Then, add the 'marker' object to the 'markers' array with '.push'
+                markers.push(newMarker);
+                console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
+                console.log("After .push:");
+                console.log("markers: ", markers);
+                console.log("newMarker: ", newMarker);
+
+
+                // Previous working code for working example:
+                // const markers = [
+                // {
+                //     id: 1,
+                //     name: "Chicago, Illinois",
+                //     position: { lat: 41.881832, lng: -87.623177 }
+                // },
+                // {
+                //     id: 2,
+                //     name: "Denver, Colorado",
+                //     position: { lat: 39.739235, lng: -104.99025 }
+                // },
+                // {
+                //     id: 3,
+                //     name: "Los Angeles, California",
+                //     position: { lat: 34.052235, lng: -118.243683 }
+                // },
+                // {
+                //     id: 4,
+                //     name: "New York, New York",
+                //     position: { lat: 40.712776, lng: -74.005974 }
+                // }
+                // ];
             }
         }
 
