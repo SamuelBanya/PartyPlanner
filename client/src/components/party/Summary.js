@@ -51,11 +51,9 @@ import Geocode from "react-geocode";
 // https://developers.google.com/maps/documentation/javascript/geocoding
 // https://developers.google.com/maps/documentation/geocoding/overview
 
-// Advice Notes:
-// If you haven't seen it already, Rails has a built-in secrets store that you can also use: https://guides.rubyonrails.org/security.html#custom-credentials
-// With a Google Maps API key, you should be fine to use it cleartext AFAIK, presuming you're using it to display Google Maps embeds. 
-// The web browser needs to include the API key in its requests to Google, so you can't keep it secret. 
-
+// TODO:
+// Utilize advice that was given to me:
+//  Make sure that the result of the async operation in the 'get_coordinates' function ends up in useEffect() if it is intended to change what is actually rendered
 // Obtaining Geocoder results via 'async' function attempt:
 async function get_coordinates (name) {
     return await Geocode.fromAddress(name).then(
