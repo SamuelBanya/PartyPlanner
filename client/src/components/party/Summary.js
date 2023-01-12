@@ -101,31 +101,31 @@ function Summary({ parties, onFetchSummaryParties }) {
 
     // NOTE: 
     // Commented out since its working for the actual example, but I need it working for my actual locations:
-    const markers = [
-    {
-        id: 1,
-        name: "Chicago, Illinois",
-        position: { lat: 41.881832, lng: -87.623177 }
-    },
-    {
-        id: 2,
-        name: "Denver, Colorado",
-        position: { lat: 39.739235, lng: -104.99025 }
-    },
-    {
-        id: 3,
-        name: "Los Angeles, California",
-        position: { lat: 34.052235, lng: -118.243683 }
-    },
-    {
-        id: 4,
-        name: "New York, New York",
-        position: { lat: 40.712776, lng: -74.005974 }
-    }
-    ];
+    // const markers = [
+    // {
+    //     id: 1,
+    //     name: "Chicago, Illinois",
+    //     position: { lat: 41.881832, lng: -87.623177 }
+    // },
+    // {
+    //     id: 2,
+    //     name: "Denver, Colorado",
+    //     position: { lat: 39.739235, lng: -104.99025 }
+    // },
+    // {
+    //     id: 3,
+    //     name: "Los Angeles, California",
+    //     position: { lat: 34.052235, lng: -118.243683 }
+    // },
+    // {
+    //     id: 4,
+    //     name: "New York, New York",
+    //     position: { lat: 40.712776, lng: -74.005974 }
+    // }
+    // ];
 
     // NOTE: Commented out for now to work on parent App.js's related function to pull more data for lat and lng for locations
-    // let markers = []
+    let markers = []
 
     const [activeMarker, setActiveMarker] = useState(null);
 
@@ -210,6 +210,7 @@ function Summary({ parties, onFetchSummaryParties }) {
                 // Provide the 'party.location.name' for the 'name' value
                 // Use the 'Geocoder' fetch call to obtain the correct longitude and latitude results for each of the locations --> This might be tricky since they might not be received in time
                 // PREVIOUS LINE
+                let newMarker = { id: party.location.id, name: party.location.name, position: party.location.position }
                 // let newMarker = { id: party.location.id, name: party.location.name, position: Geocode.fromAddress("Eiffel Tower").then(
                 // SECOND PREVIOUS LINES
                 // let newMarker = { id: party.location.id, name: party.location.name, position: Geocode.fromAddress(party.location.name).then(
@@ -230,13 +231,13 @@ function Summary({ parties, onFetchSummaryParties }) {
 
                 // Then, add the 'marker' object to the 'markers' array with '.push'
                 // console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
-                // console.log("Before .push:");
-                // console.log("markers: ", markers);
-                // console.log("newMarker: ", newMarker);
-                // markers.push(newMarker);
-                // console.log("After .push:");
-                // console.log("markers: ", markers);
-                // console.log("newMarker: ", newMarker);
+                console.log("Before .push:");
+                console.log("markers: ", markers);
+                console.log("newMarker: ", newMarker);
+                markers.push(newMarker);
+                console.log("After .push:");
+                console.log("markers: ", markers);
+                console.log("newMarker: ", newMarker);
                 // console.log("----------TESTING TRYING TO CREATE NEW MARKERS:----------");
 
                 // Previous working code for working example:
