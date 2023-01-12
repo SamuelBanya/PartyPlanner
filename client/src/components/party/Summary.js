@@ -24,7 +24,7 @@ import Geocode from "react-geocode";
 // GOOGLE MAPS EXAMPLE //
 // From this Docs page:
 // https://react-google-maps-api-docs.netlify.app/
-// Also this is an example to use:
+// Also this is an example to use Google Maps API + React:
 // https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
 
 // Google Maps Example With Custom Colors For 'Markers' (aka 'pins' to an everyday person):
@@ -38,6 +38,9 @@ import Geocode from "react-geocode";
 
 // Example from the 'InfoWindows' docs page on how to add an 'InfoWindow' to an existing 'Marker' through a click event:
 // https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
+
+// Example of how to use Google Maps API with markers and infowindow together:
+// https://codesandbox.io/s/react-google-mapsapi-multiple-markers-infowindow-h6vlq?file=/src/Map.js:1109-1484
 
 // GEOCODING LINKS:
 // 'search-geonames' package to search 'geonames' data:
