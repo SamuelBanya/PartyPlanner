@@ -150,21 +150,22 @@ function Summary({ parties, onFetchParties }) {
     );
     // ----------------------------'react-geocode' EXAMPLE----------------------------'
 
+    // PREVIOUS LINES USING PREVIOUS EXAMPLE WITH PREDETERMINED LOCATIONS:
     // Mapping through each of the 'markers' to obtain the corresponding 'lat' and 'lng' values for later use on the map itself:
-    markers.map((marker) => {
-        console.log("TESTING GEOCODER RESULTS TO OBTAIN LAT AND LNG FOR MAP: ");
-        console.log("marker: ", marker);
-        Geocode.fromAddress(marker.name)
-        .then((response) => {
-            const { lat, lng } = response.results[0].geometry.location;
-            console.log("Longitude and Latitude of " + marker.name + ": ");
-            console.log(lat, lng);
-        },
-        (error) => {
-            console.error(error);
-        }
-        );
-    });
+    // markers.map((marker) => {
+    //     console.log("TESTING GEOCODER RESULTS TO OBTAIN LAT AND LNG FOR MAP: ");
+    //     console.log("marker: ", marker);
+    //     Geocode.fromAddress(marker.name)
+    //     .then((response) => {
+    //         const { lat, lng } = response.results[0].geometry.location;
+    //         console.log("Longitude and Latitude of " + marker.name + ": ");
+    //         console.log(lat, lng);
+    //     },
+    //     (error) => {
+    //         console.error(error);
+    //     }
+    //     );
+    // });
 
     useEffect(() => {
         fetch("/parties", {
@@ -175,6 +176,8 @@ function Summary({ parties, onFetchParties }) {
         },
         })
         .then((response) => response.json())
+        // TODO: Possibly place the 'get_coordinates' function of grabbing the locations within the parent instead, and utilize the 'location_id'
+        // so that you can easily utilize the same returned list later on when its done with its fetching:
         .then((data) => {
             onFetchParties(data);
         });
