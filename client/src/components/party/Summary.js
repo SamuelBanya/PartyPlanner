@@ -210,7 +210,7 @@ function Summary({ parties, onFetchSummaryParties }) {
                 // Provide the 'party.location.name' for the 'name' value
                 // Use the 'Geocoder' fetch call to obtain the correct longitude and latitude results for each of the locations --> This might be tricky since they might not be received in time
                 // PREVIOUS LINE
-                let newMarker = { id: party.location.id, name: party.location.name, position: party.location.position }
+                let newMarker = { id: party.location.id, name: party.name + ": " + party.location.name, position: party.location.position }
                 // let newMarker = { id: party.location.id, name: party.location.name, position: Geocode.fromAddress("Eiffel Tower").then(
                 // SECOND PREVIOUS LINES
                 // let newMarker = { id: party.location.id, name: party.location.name, position: Geocode.fromAddress(party.location.name).then(
@@ -320,7 +320,7 @@ function Summary({ parties, onFetchSummaryParties }) {
                 <GoogleMap
                     mapContainerStyle={containerStyle}
                     center={centers[0]}
-                    zoom={10}
+                    zoom={3}
                 >
                     {markers.map(({ id, name, position }) => {
                     console.log("---------------------------------------------");
