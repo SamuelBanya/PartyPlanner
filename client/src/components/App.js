@@ -68,7 +68,7 @@ function App() {
 
   // NOTE: This function is necessary to obtain the 'lat' (latitude) and 'lng' (longitude) to later display the proper
   // marker positions for the map on the 'Summary' page:
-  async function get_coordinates (name) {
+  async function get_coordinates(name) {
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
     Geocode.setLanguage("en");
     Geocode.setLocationType("ROOFTOP");
@@ -82,16 +82,24 @@ function App() {
         console.log("lng: ", lng);
         console.log("position object: ", position);
 
+        // Related Stackoverflow post:
+        // https://stackoverflow.com/questions/38884522/why-is-my-asynchronous-function-returning-promise-pending-instead-of-a-val
         return position
       },
       (error) => {
         console.error(error);
       }
-  )}
+  ).then((response) => {
+    return response;
+  })
+  }
 
   // NOTE: This is a 'Summary' page specific version since we want to add longitude and latitude values only specific to the map page
   // and don't need it added to the existing backend data:
+  // PREVIOUS LINE:
   function handleFetchSummaryParties(fetchedParties) {
+  // NOTE: Wrapping this in an 'async' block to allow for 'await' to be used later on due to this StackOverflow post:
+  // https://stackoverflow.com/questions/66486903/top-level-await-expressions-are-only-allowed-when-the-module-option-is-set-t
     let modifiedParties = [];
     console.log("handleFetchSummaryParties function called in parent App component");
     console.log("fetchedParties: ", fetchedParties);
@@ -107,6 +115,7 @@ function App() {
         console.log("party.location: ", party.location);
         console.log("party.location.name: ", party.location.name);
         console.log("Now calling the get_coordinates function to obtain the lat and lng for use on the Summary page's map!");
+        // PREVIOUS LINE
         let position = get_coordinates(party.location.name);
         console.log("position object: ", position);
         console.log("party.location: ", party.location);
