@@ -74,13 +74,13 @@ function App() {
     Geocode.setLocationType("ROOFTOP");
     return await Geocode.fromAddress(name).then(
       (response) => {
-        console.log("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
-        console.log("Within async function, get_coordinates: ")
+        // console.log("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+        // console.log("Within async function, get_coordinates: ")
         const { lat, lng } = response.results[0].geometry.location;
         let position = { lat: lat, lng: lng }
-        console.log("lat: ", lat);
-        console.log("lng: ", lng);
-        console.log("position object: ", position);
+        // console.log("lat: ", lat);
+        // console.log("lng: ", lng);
+        // console.log("position object: ", position);
 
         // Related Stackoverflow post:
         // https://stackoverflow.com/questions/38884522/why-is-my-asynchronous-function-returning-promise-pending-instead-of-a-val
@@ -95,24 +95,24 @@ function App() {
 
   // MODIFIED VERSION OF FUNCTION:
   async function handleFetchSummaryParties(fetchedParties) {
-    console.log("handleFetchSummaryParties function called in parent App component");
-    console.log("fetchedParties: ", fetchedParties);
+    // console.log("handleFetchSummaryParties function called in parent App component");
+    // console.log("fetchedParties: ", fetchedParties);
 
     // Loop through each party and check to see if it has a location
     // If it has a location, then run the 'get_coordinates' function to its actual 'lat' and 'lng' values accordingly so that we can 
     // later use them for the map on the summary page:
     const promises = fetchedParties.map(async (party) => {
-      console.log("Inside .map for fetchedParties within handleFetchSummaryParties function in parent App.js component");
-      console.log("party: ", party);
+      // console.log("Inside .map for fetchedParties within handleFetchSummaryParties function in parent App.js component");
+      // console.log("party: ", party);
       if (party.location) {
-        console.log("Given party has a location!")
-        console.log("party.location: ", party.location);
-        console.log("party.location.name: ", party.location.name);
-        console.log("Now calling the get_coordinates function to obtain the lat and lng for use on the Summary page's map!");
+        // console.log("Given party has a location!")
+        // console.log("party.location: ", party.location);
+        // console.log("party.location.name: ", party.location.name);
+        // console.log("Now calling the get_coordinates function to obtain the lat and lng for use on the Summary page's map!");
         let position = await get_coordinates(party.location.name);
-        console.log("position object: ", position);
-        console.log("party.location: ", party.location);
-        console.log("typeof(party.location): ", typeof(party.location));
+        // console.log("position object: ", position);
+        // console.log("party.location: ", party.location);
+        // console.log("typeof(party.location): ", typeof(party.location));
         
         return {...party, location: {...party.location, position: position}};
       } 
@@ -123,9 +123,9 @@ function App() {
 
     const modifiedParties = await Promise.all( promises );
 
-    console.log("modifiedParies after .map() section: ", modifiedParties);
+    // console.log("modifiedParies after .map() section: ", modifiedParties);
     setParties(modifiedParties);
-    console.log("parties within handleFetchSummaryParties function in parent App component: ", parties);
+    // console.log("parties within handleFetchSummaryParties function in parent App component: ", parties);
   }
 
   function handleAddParty(newParty) {
