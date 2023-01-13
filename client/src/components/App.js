@@ -9,6 +9,7 @@ import Location from "./location/Location";
 import Summary from "./party/Summary";
 import Geocode from "react-geocode";
 import { HelloProvider } from "./context/HelloContext";
+import './App.css';
 
 function App() {
   // TODO:
@@ -349,7 +350,7 @@ function App() {
       //   <NavBar user={user} setUser={setUser} />
       // </context.provider>
   return (
-    <>
+    <div className="App">
       <NavBar user={user} setUser={setUser} />
       <Routes>
         <Route 
@@ -393,7 +394,7 @@ function App() {
           element={<Summary parties={parties} onFetchSummaryParties={handleFetchSummaryParties} />}
         />
       </Routes>
-    </>
+    </div>
   );
 }
 

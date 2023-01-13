@@ -312,8 +312,7 @@ function Summary({ parties, onFetchSummaryParties }) {
 
     return (
         <>
-            <h1>Summary</h1>
-            { partyResults }
+            <h1>Map</h1>
             <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
             >
@@ -343,6 +342,8 @@ function Summary({ parties, onFetchSummaryParties }) {
                     )})}
                 </GoogleMap>
             </LoadScript>
+            <h1>Summary</h1>
+            { partyResults }
         </>
     )
 
