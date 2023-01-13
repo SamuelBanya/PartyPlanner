@@ -79,7 +79,7 @@ function Summary({ parties, onFetchSummaryParties }) {
     // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
     const containerStyle = {
     width: '400px',
-    height: '400px'
+    height: '400px',
     };
 
     const centers = [{
@@ -306,45 +306,50 @@ function Summary({ parties, onFetchSummaryParties }) {
                         </ul>
                     </ul>
                 </ul>
+                <br />
             </>
         )
     });
 
     return (
-        <>
+        <div >
             <h1>Map</h1>
-            <LoadScript
-                googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
-            >
-                <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={centers[0]}
-                    zoom={3}
+                <LoadScript
+                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
                 >
-                    {markers.map(({ id, name, position }) => {
-                    console.log("---------------------------------------------");
-                    console.log("Checking markers.map at end of JSX statement:");
-                    console.log("id: ", id);
-                    console.log("name: ", name);
-                    console.log("position: ", position);
-                    return (
-                        <Marker
-                        key={id}
-                        position={position}
-                        onClick={() => handleActiveMarker(id)}
+                    <div className="GoogleMapDiv">
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={centers[0]}
+                            zoom={3}
                         >
-                        {activeMarker === id ? (
-                            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                            <div>{name}</div>
-                            </InfoWindow>
-                        ) : null}
-                        </Marker>
-                    )})}
-                </GoogleMap>
-            </LoadScript>
+                            {markers.map(({ id, name, position }) => {
+                            console.log("---------------------------------------------");
+                            console.log("Checking markers.map at end of JSX statement:");
+                            console.log("id: ", id);
+                            console.log("name: ", name);
+                            console.log("position: ", position);
+                            return (
+                                <Marker
+                                key={id}
+                                position={position}
+                                onClick={() => handleActiveMarker(id)}
+                                >
+                                {activeMarker === id ? (
+                                    <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                                    <div>{name}</div>
+                                    </InfoWindow>
+                                ) : null}
+                                </Marker>
+                            )})}
+                        </GoogleMap>
+                    </div>
+                </LoadScript>
             <h1>Summary</h1>
-            { partyResults }
-        </>
+            <div className="SummaryPageListDiv">
+                { partyResults }
+            </div>
+        </div>
     )
 
 }

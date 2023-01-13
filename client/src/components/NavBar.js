@@ -45,19 +45,21 @@ function NavBar({ user, setUser }) {
   );
 }
 
+  // display: flex;
 const Wrapper = styled.div`
-  display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px;
 `;
 
+
+  // color: rgb(68, 33, 150);
 const Logo = styled.h1`
   font-family: "Permanent Marker", cursive;
   font-size: 2rem;
-  color: black;
   margin: 0;
   line-height: 1;
+  color: black;
 
   a {
     color: inherit;
@@ -65,10 +67,10 @@ const Logo = styled.h1`
   }
 `;
 
+// position: absolute;
 const Nav = styled.nav`
   display: flex;
   gap: 4px;
-  position: absolute;
   left: 20px;
 `;
 
