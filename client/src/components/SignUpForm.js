@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Error, Input, FormField, Label } from "../styles";
+import './App.css';
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -37,6 +38,7 @@ function SignUpForm({ onLogin }) {
       <FormField>
         <Label htmlFor="username">Username</Label>
         <Input
+          className="loginInputField"
           type="text"
           id="username"
           autoComplete="off"
@@ -47,6 +49,7 @@ function SignUpForm({ onLogin }) {
       <FormField>
         <Label htmlFor="password">Password</Label>
         <Input
+          className="loginInputField"
           type="password"
           id="password"
           value={password}

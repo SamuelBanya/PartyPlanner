@@ -3,6 +3,8 @@ import styled from "styled-components";
 import LoginForm from "../components/LoginForm";
 import SignUpForm from "../components/SignUpForm";
 import { Button } from "../styles";
+// Using just the App's main CSS stylesheet since I needed a quick fix for the paragraph's default dark text color:
+import '../components/App.css';
 
 function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true);
@@ -14,7 +16,7 @@ function Login({ onLogin }) {
         <>
           <LoginForm onLogin={onLogin} />
           <Divider />
-          <p>
+          <p className="StyledParagraph">
             Don't have an account? &nbsp;
             <Button color="secondary" onClick={() => setShowLogin(false)}>
               Sign Up
@@ -25,7 +27,7 @@ function Login({ onLogin }) {
         <>
           <SignUpForm onLogin={onLogin} />
           <Divider />
-          <p>
+          <p className="StyledParagraph">
             Already have an account? &nbsp;
             <Button color="secondary" onClick={() => setShowLogin(true)}>
               Log In
@@ -40,7 +42,7 @@ function Login({ onLogin }) {
 const Logo = styled.h1`
   font-family: "Permanent Marker", cursive;
   font-size: 3rem;
-  color: blue;
+  color: #ff19cd;
   margin: 8px 0 16px;
 `;
 

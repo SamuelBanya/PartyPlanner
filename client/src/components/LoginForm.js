@@ -7,11 +7,9 @@ function LoginForm({ onLogin }) {
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-        // {/* {errors ? errors.map((err) => ( <Error key={err}>{err}</Error> )) : null} </FormField> */}
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    // fetch("/api/login", {
     fetch("/login", {
       method: "POST",
       headers: {

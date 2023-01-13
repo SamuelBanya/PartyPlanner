@@ -67,3 +67,13 @@ ul {
     display: inline-block;
     text-align: left
 }
+
+/* For signup page weird color issue: */
+.StyledParagraph {
+  color: white;
+}
+
+.LoginInputField {
+  color: white;
+  background-color: yellow;
+}
