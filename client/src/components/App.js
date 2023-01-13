@@ -12,17 +12,6 @@ import { HelloProvider } from "./context/HelloContext";
 import './App.css';
 
 function App() {
-  // TODO:
-  // Adding 'useContext' for 'NavBar' component:
-  // 'useContext' Docs Page:
-  // https://beta.reactjs.org/apis/react/useContext
-  // Example to possibly use to change themes of the 'NavBar' component:
-  // https://codesandbox.io/s/react-usecontext-rydy5?file=/src/App.js
-  // const context = React.createContext(null);
-  // const myContextVal = useContext(context);
-  // const [contextState, setContextState] = useState(null);
-
-  // Rest of variables:
   const [user, setUser] = useState(null);
   const [parties, setParties] = useState([]);
   const [chosenParty, setChosenParty] = useState({});
@@ -63,10 +52,7 @@ function App() {
   if (!user) return <Login onLogin={setUser} />;
 
   function handleFetchParties(fetchedParties) {
-    console.log("handleFetchParties function called in parent App component");
-    console.log("fetchedParties: ", fetchedParties);
     setParties(fetchedParties)
-    console.log("parties within handleFetchParties function in parent App component: ", parties);
   }
 
   // NOTE: This function is necessary to obtain the 'lat' (latitude) and 'lng' (longitude) to later display the proper
@@ -77,14 +63,8 @@ function App() {
     Geocode.setLocationType("ROOFTOP");
     return await Geocode.fromAddress(name).then(
       (response) => {
-        // console.log("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
-        // console.log("Within async function, get_coordinates: ")
         const { lat, lng } = response.results[0].geometry.location;
         let position = { lat: lat, lng: lng }
-        // console.log("lat: ", lat);
-        // console.log("lng: ", lng);
-        // console.log("position object: ", position);
-
         // Related Stackoverflow post:
         // https://stackoverflow.com/questions/38884522/why-is-my-asynchronous-function-returning-promise-pending-instead-of-a-val
         return position
@@ -96,26 +76,13 @@ function App() {
     return response;
   })}
 
-  // MODIFIED VERSION OF FUNCTION:
   async function handleFetchSummaryParties(fetchedParties) {
-    // console.log("handleFetchSummaryParties function called in parent App component");
-    // console.log("fetchedParties: ", fetchedParties);
-
     // Loop through each party and check to see if it has a location
     // If it has a location, then run the 'get_coordinates' function to its actual 'lat' and 'lng' values accordingly so that we can 
     // later use them for the map on the summary page:
     const promises = fetchedParties.map(async (party) => {
-      // console.log("Inside .map for fetchedParties within handleFetchSummaryParties function in parent App.js component");
-      // console.log("party: ", party);
       if (party.location) {
-        // console.log("Given party has a location!")
-        // console.log("party.location: ", party.location);
-        // console.log("party.location.name: ", party.location.name);
-        // console.log("Now calling the get_coordinates function to obtain the lat and lng for use on the Summary page's map!");
         let position = await get_coordinates(party.location.name);
-        // console.log("position object: ", position);
-        // console.log("party.location: ", party.location);
-        // console.log("typeof(party.location): ", typeof(party.location));
         
         return {...party, location: {...party.location, position: position}};
       } 
@@ -126,9 +93,7 @@ function App() {
 
     const modifiedParties = await Promise.all( promises );
 
-    // console.log("modifiedParies after .map() section: ", modifiedParties);
     setParties(modifiedParties);
-    // console.log("parties within handleFetchSummaryParties function in parent App component: ", parties);
   }
 
   function handleAddParty(newParty) {
@@ -151,10 +116,7 @@ function App() {
   }
 
   function handleChooseParty(e) {
-    // console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
-    // console.log("handleChooseParty function called");
     const match = parties.find(item => item.name == e.target.value);
-    // console.log("match: ", match);
 
     setChosenParty(match);
 
@@ -166,26 +128,14 @@ function App() {
     // Adding use case scenario of when a location exists for the match, then update the location accordingly so I don't have to write two functions 
     // to do the same thing:
     if (match.location) {
-      // console.log("match: ", match);
-      // console.log("index: ", index);
-      // console.log("match.location: ", match.location);
-      // console.log("match.location.name: ", match.location.name);
       let location = match.location.name;
       let locationId = match.location.id;
-      // NOTE: 
-      // Set the location for it's 'name'
       setLocation(location);
-      // Then, set the 'locationId' for its specific 'id' value to later use a PATCH request for editing, and a 'DELETE' request for deleting
       setLocationId(locationId);
-      // console.log("location: ", location);
     }
     else {
-      // console.log("else block reached within handleChooseParty function");
-      // console.log("match: ", match)
-      // console.log("match.location: ", match.location)
       setLocation("");
     }
-    // console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
   }
 
   function handleAddItem(newItem) {
@@ -242,39 +192,10 @@ function App() {
     setItemOptions(filteredItemOptions);
   }
 
-  // TODO:
-  // Check why a new location isn't being updated automatically in the dropdown list fo "Edit Location" child component:
-  // NEW TO CHECK:
   function handleAddLocation(newLocation) {
-    console.log("---------------------------------------------------------");
-    console.log("handleAddLocation function called in parent App component");
-    console.log("---------------------------------------------------------");
-    console.log("/////////////////////////////////////////////////////////");
-    console.log("newLocation: ", newLocation);
-    console.log("parties: ", parties);
-    console.log("chosenParty: ", chosenParty);
-    console.log("partyIndex: ", partyIndex);
-    console.log("/////////////////////////////////////////////////////////");
-    // TODO:
-    // Make this actually work:
-
     parties.map((party) => {
       if (party.id == chosenParty.id) {
-        console.log("/////////////////////////////////////////////////////////");
-        console.log("party.id matches with chosenParty.id!");
-        console.log("party.id: ", party.id);
-        console.log("chosenParty.id: ", chosenParty.id);
-        console.log("party.location: ", party.location);
-        console.log("/////////////////////////////////////////////////////////");
-        // NOTE
-        // Commented this out because this was causing issues when creating a new location 
-        // and the related form would already be filled in --> Aka only do this when someone has chosen a party
-        // aka only change the location when the 'ChoosePartyDropdown' menu is selected
-        // setLocation(newLocation);
         let tempArray = [...parties];
-        console.log("tempArray: ", tempArray);
-        console.log("tempArray[partyIndex]: ", tempArray[partyIndex]);
-        console.log("tempArray[partyIndex].location: ", tempArray[partyIndex].location);
         tempArray[partyIndex].location = newLocation;
         setParties(tempArray) ;
       }
@@ -283,72 +204,26 @@ function App() {
       }});
     
     console.log("parties after setParties() called for tempArray: ", parties);
-    // console.log("locationOptions after entire handleAddLocation function in parent App component: ", locationOptions);
   }
 
-  // NOTE:
-  // I took this function out as there is only one location anyway, so this isn't needed:
-  // function handleChangeLocationInfo(chosenLocationId, chosenLocationIndex) {
-  // function handleChangeLocationInfo(chosenPartyLocationMatch) {
-  //   console.log("---------------------------------------------------------");
-  //   console.log("handleChangeLocation function called in parent App component");
-  //   console.log("---------------------------------------------------------");
-  //   console.log("chosenPartyLocationMatch: ", chosenPartyLocationMatch);
-    // setLocationId(chosenLocationId);
-    // setLocationIndex(chosenLocationIndex);
-  // }
-
   function handleEditLocation(editedLocation, locationId) {
-    console.log("---------------------------------------------------------");
-    console.log("handleEditLocation function called in parent App component");
-    console.log("---------------------------------------------------------");
-    console.log("editedLocation: ", editedLocation);
-    console.log("locationId: ", locationId);
-    console.log("parties: ", parties);
-    console.log("chosenParty: ", chosenParty);
     let tempArray = [...parties];
-    console.log("tempArray[partyIndex]: ", tempArray[partyIndex]);
-    console.log("tempArray[partyIndex].location: ", tempArray[partyIndex].location);
     tempArray[partyIndex].location = editedLocation;
     setParties(tempArray);
-    // MAYBE
     setLocation(editedLocation);
   }
 
-  // function handleDeleteLocation(response, deletedLocationId) {
   function handleDeleteLocation(response, locationId) {
-    console.log("---------------------------------------------------------");
-    console.log("handleDeleteLocation function called in parent App component");
-    console.log("---------------------------------------------------------");
-    console.log("parties: ", parties);
-    console.log("response: ", response);
-    // console.log("deletedLocationId: ", deletedLocationid);
-    console.log("locationId: ", locationId);
     let tempArray = [...parties];
-    console.log("tempArray: ", tempArray);
-    console.log("tempArray[partyIndex].location: ", tempArray[partyIndex].location);
     tempArray[partyIndex].location = null
-    console.log("tempArray after setting the location to 'null' since its been deleted: ", tempArray);
     setParties(tempArray);
     setLocation("");
-
-    // let filteredLocationOptions = chosenParty.location.map((location) => {
-    //     return (
-    //         <option key={location.id} value={location.name}>{location.name}</option>
-    //     )
-    // });
-
-    // setLocationOptions(filteredLocationOptions);
   }
 
   // Two resources used for 'Navigate' for '/' route for '/about' component:
   // https://www.pluralsight.com/guides/how-to-set-react-router-default-route-redirect-to-home
   // https://stackoverflow.com/questions/63690695/react-redirect-is-not-exported-from-react-router-dom
 
-  // Previous attempt to use 'useContext':
-      // <context.provider value={{ contextState, setContextState} }>
-      //   <NavBar user={user} setUser={setUser} />
-      // </context.provider>
   return (
     <div className="App">
       <NavBar user={user} setUser={setUser} />
@@ -389,8 +264,6 @@ function App() {
         />
         <Route 
           path="/summary" 
-          // PREVIOUS LINE:
-          // element={<Summary parties={parties} onFetchParties={handleFetchParties} />}
           element={<Summary parties={parties} onFetchSummaryParties={handleFetchSummaryParties} />}
         />
       </Routes>

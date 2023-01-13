@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { Button } from "../styles";
 
 function NavBar({ user, setUser }) {
-  // TODO:
-  // Implement 'useContext' to utilize 'user' props that was handed down
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
@@ -45,7 +43,6 @@ function NavBar({ user, setUser }) {
   );
 }
 
-  // display: flex;
 const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
@@ -53,7 +50,6 @@ const Wrapper = styled.div`
 `;
 
 
-  // color: rgb(68, 33, 150);
 const Logo = styled.h1`
   font-family: "Permanent Marker", cursive;
   font-size: 2rem;
@@ -67,7 +63,6 @@ const Logo = styled.h1`
   }
 `;
 
-// position: absolute;
 const Nav = styled.nav`
   display: flex;
   gap: 4px;

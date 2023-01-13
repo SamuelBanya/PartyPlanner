@@ -13,10 +13,6 @@ function AddPartyForm({ onAddParty }) {
     };
 
     const handleCreatePartyFormSubmit = (e) => {
-        console.log("createPartyFormData in handleCreatePartyFormSubmit function in AddPartyForm child component: ", createPartyFormData);
-        console.log('createPartyFormData["name"] in handleCreatePartyFormSubmit function in AddPartyForm child component: ', createPartyFormData["name"]);
-        console.log('createPartyFormData["start_time"] in handleCreatePartyFormSubmit function in AddPartyForm child component: ', createPartyFormData["start_time"]);
-        console.log('createPartyFormData["end_time"] in handleCreatePartyFormSubmit function in AddPartyForm child component: ', createPartyFormData["end_time"]);
         e.preventDefault();
         fetch("/parties", {
             method: "POST",

@@ -1,5 +1,4 @@
 import React, { useState, useContext, createContext } from "react";
-// import UserContext from "./context/UserContext";
 import { HelloContext } from "./context/HelloContext";
 
 // Links for 'useContext':
