@@ -8,6 +8,7 @@ import Item from "./item/Item";
 import Location from "./location/Location";
 import Summary from "./party/Summary";
 import Geocode from "react-geocode";
+import UserContext from "./context/UserContext";
 
 function App() {
   // TODO:
@@ -16,9 +17,9 @@ function App() {
   // https://beta.reactjs.org/apis/react/useContext
   // Example to possibly use to change themes of the 'NavBar' component:
   // https://codesandbox.io/s/react-usecontext-rydy5?file=/src/App.js
-  const context = React.createContext(null);
-  const myContextVal = useContext(context);
-  const [contextState, setContextState] = useState(null);
+  // const context = React.createContext(null);
+  // const myContextVal = useContext(context);
+  // const [contextState, setContextState] = useState(null);
 
   // Rest of variables:
   const [user, setUser] = useState(null);
@@ -30,7 +31,7 @@ function App() {
   const [itemIndex, setItemIndex] = useState("");
   const [location, setLocation] = useState([]);
   const [locationId, setLocationId] = useState("");
-  const UserContext = createContext();
+  // const UserContext = createContext();
 
   useEffect(() => {
     // auto-login
@@ -358,9 +359,9 @@ function App() {
           // https://www.w3schools.com/react/react_usecontext.asp
           element={
             <UserContext.Provider value={user}>
-              <h1>{`Hello ${user}!`}</h1>
               <About />
             </UserContext.Provider>
+            // <About />
           } 
         />
         <Route 

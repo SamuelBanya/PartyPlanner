@@ -1,11 +1,12 @@
 import React, { useState, useContext, createContext } from "react";
+import UserContext from "./context/UserContext";
 
 function About() {
-    const user = useContext(UserContext);
+    const userContext = useContext(UserContext);
     return (
         <div>
             <h2>About Page</h2>
-            <h3>{`Hello ${user}`}</h3>
+            <h3>{userContext.message}</h3>
             <p>
                 This app is a Full Stack web application made with React, Ruby On Rails, and PostgresSQL that allows a user to plan a party with their friends!
             </p>
