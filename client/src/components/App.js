@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, createContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import Login from "../pages/Login";
@@ -8,7 +8,7 @@ import Item from "./item/Item";
 import Location from "./location/Location";
 import Summary from "./party/Summary";
 import Geocode from "react-geocode";
-import UserContext from "./context/UserContext";
+import { HelloProvider } from "./context/HelloContext";
 
 function App() {
   // TODO:
@@ -31,7 +31,7 @@ function App() {
   const [itemIndex, setItemIndex] = useState("");
   const [location, setLocation] = useState([]);
   const [locationId, setLocationId] = useState("");
-  // const UserContext = createContext();
+  const UserContext = createContext();
 
   useEffect(() => {
     // auto-login
@@ -358,9 +358,9 @@ function App() {
           // Taken from this example:
           // https://www.w3schools.com/react/react_usecontext.asp
           element={
-            <UserContext.Provider value={user}>
-              <About />
-            </UserContext.Provider>
+            <HelloProvider>
+              <About user={user}/>
+            </HelloProvider>
             // <About />
           } 
         />
