@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, createContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import Login from "../pages/Login";
@@ -30,6 +30,7 @@ function App() {
   const [itemIndex, setItemIndex] = useState("");
   const [location, setLocation] = useState([]);
   const [locationId, setLocationId] = useState("");
+  const UserContext = createContext();
 
   useEffect(() => {
     // auto-login
@@ -352,7 +353,15 @@ function App() {
       <Routes>
         <Route 
           path="/" 
-          element={<About user={user}/>} 
+          // NOTE: Adding 'useContext' here as per project's requirement:
+          // Taken from this example:
+          // https://www.w3schools.com/react/react_usecontext.asp
+          element={
+            <UserContext.Provider value={user}>
+              <h1>{`Hello ${user}!`}</h1>
+              <About />
+            </UserContext.Provider>
+          } 
         />
         <Route 
           path="/parties" 
