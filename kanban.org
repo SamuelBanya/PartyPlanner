@@ -39,4 +39,4 @@ Now my node version defaults to Node version 16
 I was able to fix this by adding a '.env' file locally with the help of this guide that triggered me to remember that I had to do this within the 'client' directory:
 - https://www.architect.io/blog/2022-08-16/react-environment-variables-developers-guide/
 
-I also had to add a reference to the 'REACT_APP_GOOGLE_API_KEY' variable itself and set it equal to the actual Google Maps API key value found on the related Google Maps API key site ()
+I also had to add a reference to the 'REACT_APP_GOOGLE_API_KEY' variable itself and set it equal to the actual Google Maps API key value found on the related Google Maps API key site (https://console.cloud.google.com/google/maps-apis/credentials)
