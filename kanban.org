@@ -1,0 +1,42 @@
+* Kanban Board
+** Backlog
+*** TODO Reconfigure Emacs to easily handle JSX files
+<2023-03-06 Mon 19:35>: This isn't necessarily project related, but if I want to get anything major done going forward with Emacs and this project, they are going to have to work nicely together, and just as as good as VS Code was with indentation and 'just knowing' the bare minimum of how JSX return statement syntax should look.
+
+<2023-03-06 Mon 19:44>: One GIST I found is this one that goes into depth on using 'web-mode', 'eslint', and 'Prettier.js':
+- https://gist.github.com/CodyReichert/9dbc8bd2a104780b64891d8736682cea
+
+However, I did ask around online to see if there's a better way to do this, because I don't want to have to rely on Prettier.js to constantly save a file just to get automatic indentation, which I think is dumb since all modern IDE's do this by default.
+
+*** TODO Add 'summary title card'
+<2023-03-06 Mon 19:39>: As Ryan mentioned, I should look into making the summary page actually look decent in comparison. The data is there, so I just need to make it look more presentable.
+** In Progress
+** In Review
+** Completed
+*** DONE Setup Kanban board org file
+<2023-03-06 Mon 19:53>: I did some research, and found a Reddit thread on this topic:
+- https://www.reddit.com/r/emacs/comments/bs8rpm/doing_kanban_in_org_mode/
+
+I saw a few of the packages they used, and honestly, even though I could get the same experience by making a swim lane from left to right, it's probably just easier to make an Org Mode
+*** DONE Fix NVM issue with node version 16 when deploying project
+<2023-03-06 Mon 19:52>: When I tried deploying the project locally, I was getting an error that the latest version of Node was being used, when in reality, this project was made with Node version 16 because I guess Flatiron's backend templates were stuck on Node version 16.
+
+That being noted, I used this guide as a reference:
+- https://heynode.com/tutorial/install-nodejs-locally-nvm/
+
+With this in mind, I was able to fix this issue by using the following commands:
+#+begin_src bash
+nvm install 16
+nvm alias default 16
+#+end_src
+
+Now my node version defaults to Node version 16
+
+*** DONE Fix Google Maps API key when deploying Party Planner locally
+<2023-03-06 Mon 19:33>: I first deployed the project locally, and realized I got the 'NoApiKeys' error:
+- https://developers.google.com/maps/documentation/javascript/error-messages#no-api-keys
+
+I was able to fix this by adding a '.env' file locally with the help of this guide that triggered me to remember that I had to do this within the 'client' directory:
+- https://www.architect.io/blog/2022-08-16/react-environment-variables-developers-guide/
+
+I also had to add a reference to the 'REACT_APP_GOOGLE_API_KEY' variable itself and set it equal to the actual Google Maps API key value found on the related Google Maps API key site ()
