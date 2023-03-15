@@ -78,14 +78,14 @@ function App() {
 
   async function handleFetchSummaryParties(fetchedParties) {
     // Loop through each party and check to see if it has a location
-    // If it has a location, then run the 'get_coordinates' function to its actual 'lat' and 'lng' values accordingly so that we can 
+    // If it has a location, then run the 'get_coordinates' function to its actual 'lat' and 'lng' values accordingly so that we can
     // later use them for the map on the summary page:
     const promises = fetchedParties.map(async (party) => {
       if (party.location) {
         let position = await get_coordinates(party.location.name);
-        
+
         return {...party, location: {...party.location, position: position}};
-      } 
+      }
       else {
         return party;
       }
@@ -102,7 +102,7 @@ function App() {
   }
 
   function handleEditParty(editedParty) {
-    setParties((parties) => 
+    setParties((parties) =>
       parties.map((party) => {
         return party.id === editedParty.id ? editedParty : party;
       })
@@ -123,9 +123,9 @@ function App() {
     let index = parties.map(party => party.name).indexOf(e.target.value)
 
     setPartyIndex(index);
-   
+
     // NOTE:
-    // Adding use case scenario of when a location exists for the match, then update the location accordingly so I don't have to write two functions 
+    // Adding use case scenario of when a location exists for the match, then update the location accordingly so I don't have to write two functions
     // to do the same thing:
     if (match.location) {
       let location = match.location.name;
@@ -153,7 +153,7 @@ function App() {
         let tempArray = [...parties];
         tempArray[partyIndex].items.push(newItem);
         setParties(tempArray) ;
-      } 
+      }
       else {
         console.log("Match not found within 'handleAddNewItem!");
       }});
@@ -202,7 +202,7 @@ function App() {
       else {
         console.log("Match not found within 'handleAddNewLocation!");
       }});
-    
+
     console.log("parties after setParties() called for tempArray: ", parties);
   }
 
@@ -228,42 +228,42 @@ function App() {
     <div className="App">
       <NavBar user={user} setUser={setUser} />
       <Routes>
-        <Route 
-          path="/" 
-          // NOTE: Adding 'useContext' here as per project's requirement:
-          // Taken from this example:
-          // https://www.w3schools.com/react/react_usecontext.asp
-          element={
-            <HelloProvider>
+        <Route
+        path="/"
+        // NOTE: Adding 'useContext' here as per project's requirement:
+        // Taken from this example:
+        // https://www.w3schools.com/react/react_usecontext.asp
+        element={
+          <HelloProvider>
               <About user={user}/>
             </HelloProvider>
-            // <About />
-          } 
-        />
-        <Route 
-          path="/parties" 
-          element={<Party 
-            parties={parties} onFetchParties={handleFetchParties} onChooseParty={handleChooseParty} chosenParty={chosenParty}
-            onAddParty={handleAddParty} onEditParty={handleEditParty} onDeleteParty={handleDeleteParty} 
-          />}
-        />
-        <Route 
-          path="/items" 
-          element={<Item 
+                          // <About />
+          }
+          />
+          <Route
+          path="/parties"
+          element={<Party
+                   parties={parties} onFetchParties={handleFetchParties} onChooseParty={handleChooseParty} chosenParty={chosenParty}
+                   onAddParty={handleAddParty} onEditParty={handleEditParty} onDeleteParty={handleDeleteParty}
+                   />}
+          />
+          <Route
+          path="/items"
+          element={<Item
             parties={parties} onChooseParty={handleChooseParty} chosenParty={chosenParty} onFetchParties={handleFetchParties}
             onAddItem={handleAddItem} itemOptions={itemOptions} setItemOptions={setItemOptions} itemId={itemId} setItemId={setItemId} onChangeItemInfo={handleChangeItemInfo}
-            onEditItem={handleEditItem} onDeleteItem={handleDeleteItem} 
+            onEditItem={handleEditItem} onDeleteItem={handleDeleteItem}
           />}
         />
         <Route
           path="/location"
-          element={<Location 
+          element={<Location
             parties={parties} onFetchParties={handleFetchParties} onChooseParty={handleChooseParty} chosenParty={chosenParty}
             onAddLocation={handleAddLocation} onEditLocation={handleEditLocation} onDeleteLocation={handleDeleteLocation} location={location} locationId={locationId}
           />}
         />
-        <Route 
-          path="/summary" 
+        <Route
+          path="/summary"
           element={<Summary parties={parties} onFetchSummaryParties={handleFetchSummaryParties} />}
         />
       </Routes>
