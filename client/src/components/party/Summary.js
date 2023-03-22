@@ -141,31 +141,43 @@ function Summary({ parties, onFetchSummaryParties }) {
     // This is a return statement for the 'partyResults' map variable above:
     return (
       <>
-        <ul>
-          <li>{party.name}</li>
-          <ul>
-            <li>Location</li>
-            <ul>
+        <Card sx={{ minWidth: 275 }} style={{background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,172,9,1) 0%, rgba(255,0,191,1) 100%)'}}>
+          <CardContent>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+              {party.name}
+            </Typography>
+            <Typography variant="h5" component="div">
+              Location:
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {partyLocation}
-            </ul>
-            <li>Start Time</li>
-            <ul>
+            </Typography>
+            <Typography variant="h5" component="div">
+              Start Time:
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {party.start_time}
-            </ul>
-            <li>End Time: </li>
-            <ul>
+            </Typography>
+            <Typography variant="h5" component="div">
+              End Time:
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {party.end_time}
-            </ul>
-            <li>Items: </li>
-            <ul>
+            </Typography>
+            <Typography variant="h5" component="div">
+              Items:
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {partyItems}
-            </ul>
-            <li>Users: </li>
-            <ul>
+            </Typography>
+            <Typography variant="h5" component="div">
+              Users:
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {partyUsers}
-            </ul>
-          </ul>
-        </ul>
+            </Typography>
+          </CardContent>
+        </Card>
         <br />
       </>
     )
@@ -217,27 +229,6 @@ function Summary({ parties, onFetchSummaryParties }) {
       <div className="SummaryPageListDiv">
         { partyResults }
       </div>
-      <Card sx={{ minWidth: 275 }}>
-        <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Word of the Day
-          </Typography>
-          <Typography variant="h5" component="div">
-            be{bull}nev{bull}o{bull}lent
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            adjective
-          </Typography>
-          <Typography variant="body2">
-            well meaning and kindly.
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
     </div>
   )
 

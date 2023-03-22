@@ -36,7 +36,7 @@ Button {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-    
+
 Button:active {
   box-shadow: 0px 0px 0px 0px;
   top: 5px;
@@ -65,7 +65,12 @@ Nav {
 
 ul {
     display: inline-block;
-    text-align: left
+    text-align: left;
+}
+
+/* Removing CSS styling for bulletpoints on Summary component page: */
+li {
+    list-style-type: none;
 }
 
 /* For signup page weird color issue: */

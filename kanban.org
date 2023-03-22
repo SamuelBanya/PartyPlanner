@@ -1,7 +1,7 @@
 * Kanban Board
 ** Backlog
 ** In Progress
-*** TODO Add 'summary title card'
+*** TODO Add 'summary title cards' to 'Summary' component page
 <2023-03-06 Mon 19:39>: As Ryan mentioned, I should look into making the summary page actually look decent in comparison. The data is there, so I just need to make it look more presentable.
 
 <2023-03-21 Tue 18:34>: I used these commands to install 'nvm' on Linux aka Linux Mint for the time being on the Thinkpad laptop I'm currently using:
@@ -88,6 +88,16 @@ sudo service postgresql start
 sudo -u postgres -i
 createuser -sr sam
 #+end_src
+
+<2023-03-22 Wed 15:59>: I was able to deploy this locally thankfully after using the following commands to create and migrate the database accordingly:
+#+begin_src bash
+rails db:create
+rails db:migrate
+#+end_src
+
+I then migrated the MaterialUI 'Card' component example to the project. I also figured out how to modify the background color by using an inline style change via the ideas presented in these two StackOverflow posts
+- https://stackoverflow.com/questions/58799624/how-to-change-background-color-in-react-materialui-card
+- https://stackoverflow.com/questions/48849340/how-to-add-linear-gradient-color-to-mui-chip-background
 
 ** In Review
 ** Completed
