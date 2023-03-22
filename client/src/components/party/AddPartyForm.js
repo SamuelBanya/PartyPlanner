@@ -45,7 +45,7 @@ function AddPartyForm({ onAddParty }) {
                 <br />
                 <input onChange={handleCreatePartyChange} type="text" id="end_time" name="end_time"/>
                 <br />
-                <input type="submit"/>
+                <input type="submit" value="Add Party"/>
             </form>
         </div>
     )

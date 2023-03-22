@@ -37,11 +37,11 @@ function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) 
             <ChoosePartyDropdown parties={parties} onChooseParty={onChooseParty} />
             <h2>Add Location</h2>
             <form>
-                <label htmlFor="name">Name of Location:</label>
+                <label htmlFor="name">Address of Location:</label>
                 <br />
                 <input onChange={handleCreateLocationChange} type="text" id="name" name="location_name"/>
                 <br />
-                <input onClick={handleCreate} type="submit"/>
+                <input onClick={handleCreate} type="submit" value="Add Location"/>
             </form>
         </div>
     )

@@ -10,7 +10,7 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
 
     console.log("location within EditLocationForm child component: ", location);
 
-    // TODO: 
+    // TODO:
     // Use a 'useEffect' block that pulls in the form data each time the 'chosenParty' within the 'party/ChoosePartyDropdown' menu is changed:
     useEffect(() => {
         console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
@@ -39,9 +39,9 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
             console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         }
-        // 
+        //
     }, [chosenParty]);
-    
+
     console.log("editLocationFormData outside useEffect: ", editLocationFormData);
 
     const handleEditLocationChange = (e) => {
@@ -102,7 +102,7 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
             <ChoosePartyDropdown parties={parties} onChooseParty={onChooseParty} />
             <h2>Edit Location</h2>
             <form>
-                <label htmlFor="name">Name of Location:</label>
+                <label htmlFor="name">Address of Location:</label>
                 <br />
                 <input onChange={handleEditLocationChange} type="text" id="name" name="location_name" value={editLocationFormData.location_name}/>
                 <br />

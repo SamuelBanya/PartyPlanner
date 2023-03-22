@@ -23,7 +23,7 @@ function AddItemForm({ onAddItem, parties, onChooseParty, chosenParty }) {
             body: JSON.stringify({ "name": createItemFormData["item_name"], "party_id": id}),
         })
         .then((response) => response.json())
-        .then((newItem) => { 
+        .then((newItem) => {
             onAddItem(newItem)
             swal("New item added!");
         });
@@ -38,7 +38,7 @@ function AddItemForm({ onAddItem, parties, onChooseParty, chosenParty }) {
                 <br />
                 <input onChange={handleCreateItemChange} type="text" id="name" name="item_name"/>
                 <br />
-                <input onClick={handleCreate} type="submit"/>
+                <input onClick={handleCreate} type="submit" value="Add Item"/>
             </form>
         </div>
     )
