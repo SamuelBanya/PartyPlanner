@@ -38,7 +38,7 @@ function About({ user }) {
     The ability to display a summary page to view all user parties
     </li>
     <li>
-    Ability to utilize a map library from NPM for the 'Summary' page
+    The ability to utilize the Google Maps API to produce a map with pins for the 'Summary' component page
     </li>
     </ul>
     <h2>Roadmap Items</h2>
