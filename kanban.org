@@ -1,16 +1,94 @@
 * Kanban Board
 ** Backlog
-*** TODO Reconfigure Emacs to easily handle JSX files
-<2023-03-06 Mon 19:35>: This isn't necessarily project related, but if I want to get anything major done going forward with Emacs and this project, they are going to have to work nicely together, and just as as good as VS Code was with indentation and 'just knowing' the bare minimum of how JSX return statement syntax should look.
-
-<2023-03-06 Mon 19:44>: One GIST I found is this one that goes into depth on using 'web-mode', 'eslint', and 'Prettier.js':
-- https://gist.github.com/CodyReichert/9dbc8bd2a104780b64891d8736682cea
-
-However, I did ask around online to see if there's a better way to do this, because I don't want to have to rely on Prettier.js to constantly save a file just to get automatic indentation, which I think is dumb since all modern IDE's do this by default.
-
+** In Progress
 *** TODO Add 'summary title card'
 <2023-03-06 Mon 19:39>: As Ryan mentioned, I should look into making the summary page actually look decent in comparison. The data is there, so I just need to make it look more presentable.
-** In Progress
+
+<2023-03-21 Tue 18:34>: I used these commands to install 'nvm' on Linux aka Linux Mint for the time being on the Thinkpad laptop I'm currently using:
+#+begin_src bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+#+end_src
+
+<2023-03-21 Tue 19:18>: I had to go through a ton of research since 'nvm list' was only producing 'N/A' results.
+
+The proper way to list the current versions of Node versions that are available is through this command:
+#+begin_src bash
+nvm ls-remote
+#+end_src
+
+I found this out through this StackOverflow post:
+- https://stackoverflow.com/questions/26476744/nvm-ls-remote-command-results-in-n-a
+
+I then figured out how to install Node Version 16 via this Gist since I know that the Party Planner and other Flatiron based projects are dependent on Node Version 16:
+- https://gist.github.com/d2s/372b5943bce17b964a79
+
+<2023-03-21 Tue 20:01>: I did some research on this topic, and it seems like this 'card' idea is really tied to MaterialUI.
+
+That being noted, I can just easily add MaterialUI as an additional component for this project, and literally only use it in the 'Summary' page anyway.
+
+This is especially useful since I don't need ALL of the MaterialUI components anyway, and just want to use the card element specifically.
+
+Here are related reference links I found on this topic:
+- https://mui.com/material-ui/getting-started/installation/
+- https://www.geeksforgeeks.org/how-to-use-card-component-in-reactjs/
+- https://mui.com/material-ui/react-card/
+
+These are the commands I used to install MaterialUI in the 'client' project directory for this project:
+#+begin_src bash
+npm install @mui/material @emotion/react @emotion/styled
+npm install @fontsource/roboto
+#+end_src
+
+<2023-03-21 Tue 20:08>: I then installed 'Rails' on Linux Mint by referencing this guide:
+- https://linuxopsys.com/topics/install-ruby-on-rails-on-ubuntu
+
+<2023-03-21 Tue 20:28>: I installed 'rvm' by going through the arduous process of the following commands:
+#+begin_src bash
+wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz
+tar zxvf openssl-1.1.1g.tar.gz
+
+cd openssl-1.1.1g
+./config --prefix=$HOME/.openssl/openssl-1.1.1g --openssldir=$HOME/.openssl/openssl-1.1.1g
+
+make
+make test
+
+make install
+
+rm -rf ~/.openssl/openssl-1.1.1g/certs
+ln -s /etc/ssl/certs ~/.openssl/openssl-1.1.1g/certs
+#+end_src
+
+I then referred to this GitHub page on how to install 'rvm' via the related Ubuntu package:
+- https://github.com/rvm/ubuntu_rvm
+
+I then used the following related commands to install 'rvm' on Linux Mint:
+#+begin_src bash
+sudo apt-add-repository -y ppa:rael-gc/rvm
+sudo apt-get update
+sudo apt-get install rvm
+sudo usermod -a -G rvm $USER
+#+end_src
+
+After installing 'rvm' via the Ubuntu based PPA instructions above, I then used the following command:
+#+begin_src bash
+rvm install 2.7.4 --with-openssl-dir=$HOME/.openssl/openssl-1.1.1g
+#+end_src
+
+I used this as a reference:
+- https://github.com/SamuelBanya/phase-4-deploying-rails-api-to-render
+
+I then used the following commands:
+#+begin_src bash
+gem install bundler
+gem install rails
+sudo apt update
+sudo apt install postgresql postgresql-contrib libpq-dev
+sudo service postgresql start
+sudo -u postgres -i
+createuser -sr sam
+#+end_src
+
 ** In Review
 ** Completed
 *** DONE Setup Kanban board org file
@@ -40,3 +118,14 @@ I was able to fix this by adding a '.env' file locally with the help of this gui
 - https://www.architect.io/blog/2022-08-16/react-environment-variables-developers-guide/
 
 I also had to add a reference to the 'REACT_APP_GOOGLE_API_KEY' variable itself and set it equal to the actual Google Maps API key value found on the related Google Maps API key site (https://console.cloud.google.com/google/maps-apis/credentials)
+*** DONE Reconfigure Emacs to easily handle JSX files
+<2023-03-06 Mon 19:35>: This isn't necessarily project related, but if I want to get anything major done going forward with Emacs and this project, they are going to have to work nicely together, and just as as good as VS Code was with indentation and 'just knowing' the bare minimum of how JSX return statement syntax should look.
+
+<2023-03-06 Mon 19:44>: One GIST I found is this one that goes into depth on using 'web-mode', 'eslint', and 'Prettier.js':
+- https://gist.github.com/CodyReichert/9dbc8bd2a104780b64891d8736682cea
+
+However, I did ask around online to see if there's a better way to do this, because I don't want to have to rely on Prettier.js to constantly save a file just to get automatic indentation, which I think is dumb since all modern IDE's do this by default.
+
+<2023-03-21 Tue 18:27>: I went ahead and basically just configured my Emacs config to treat all '.js' file as if they were '.jsx' files because of how weird React can be, since it totally uses '.js' files even though it really means '.jsx' at times.
+
+That being said I was able to force this in my config, and the syntax highlighting works without a single issue.

@@ -3,6 +3,14 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { Marker } from '@react-google-maps/api';
 import { InfoWindow } from '@react-google-maps/api';
 import Geocode from "react-geocode";
+// NOTE:
+// These are MaterialUI related dependencies for their 'Card' component:
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 // Links on how to protect the Google Maps API key:
 // https://medium.com/@muesingb/a-simple-guide-to-hiding-api-keys-in-rails-and-react-using-environment-variables-abc6199f487e
@@ -52,150 +60,186 @@ import Geocode from "react-geocode";
 // https://developers.google.com/maps/documentation/geocoding/overview
 
 function Summary({ parties, onFetchSummaryParties }) {
-    // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
-    const containerStyle = {
+  // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
+  const containerStyle = {
     width: '400px',
     height: '400px',
-    };
+  };
 
-    const centers = [{
-        // Lebanon, Kansas: The geographic center of the U.S.:
-        lat: 39.8097,
-        lng: -98.5556
-    }]
+  const centers = [{
+    // Lebanon, Kansas: The geographic center of the U.S.:
+    lat: 39.8097,
+    lng: -98.5556
+  }]
 
-    const position = { lat: 39.8097, lng: -98.5556 }
+  const position = { lat: 39.8097, lng: -98.5556 }
 
-    let markers = []
+  let markers = []
 
-    const [activeMarker, setActiveMarker] = useState(null);
+  const [activeMarker, setActiveMarker] = useState(null);
 
-    const handleActiveMarker = (marker) => {
-        if (marker === activeMarker) {
-        return;
-        }
-        setActiveMarker(marker);
-    };
-    // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
+  const handleActiveMarker = (marker) => {
+    if (marker === activeMarker) {
+      return;
+    }
+    setActiveMarker(marker);
+  };
+  // ------------------------------------GOOGLE MAPS EXAMPLE------------------------------------
 
-    useEffect(() => {
-        fetch("/parties", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            onFetchSummaryParties(data);
-        });
-    }, []);
+  useEffect(() => {
+    fetch("/parties", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        onFetchSummaryParties(data);
+      });
+  }, []);
 
-    let partyResults = parties.map((party) => {
-        let partyItems = party.items.map((item) => {
-            return (
-                <li key={item.id}>{item.name}</li>
-            )
-        })
+  let partyResults = parties.map((party) => {
+    let partyItems = party.items.map((item) => {
+      return (
+        <li key={item.id}>{item.name}</li>
+      )
+    })
 
-        // NOTE: I used this StackOverflow post as a reference to utilize 'Object.keys().length' to determine the length of the object:
-        // https://stackoverflow.com/questions/126100/how-to-efficiently-count-the-number-of-keys-properties-of-an-object-in-javascrip
-        let partyLocation = (<li></li>)
-        if (party.location) {
-            if (Object.keys(party.location).length > 0) {
-                partyLocation = (
-                    <li key={party.location.id}>{party.location.name}</li>
-                )
-                // Create new 'marker' object for the map here
-                // Provide the 'party.location.id' as the 'id' value
-                // Provide the 'party.location.name' for the 'name' value
-                // Use the 'Geocoder' fetch call to obtain the correct longitude and latitude results for each of the locations --> This might be tricky since they might not be received in time
-                let newMarker = { id: party.location.id, name: party.name + ": " + party.location.name, position: party.location.position }
-                markers.push(newMarker);
-            }
-        }
-
-        let usersArray = [];
-
-        party.users.map((user) => {
-            usersArray.push(user);
-        })
-
-        let uniqueUsers = [...new Set(usersArray.map((user) => user.username ))]  ;
-        let partyUsers = uniqueUsers.map((user) => {
-            return (
-                <li key={uniqueUsers.indexOf(user)}>{user}</li>
-            )
-        })
-
-        return (
-            <>
-                <ul>
-                    <li>{party.name}</li>
-                    <ul>
-                        <li>Location</li>
-                        <ul>
-                            {partyLocation}
-                        </ul>
-                        <li>Start Time</li>
-                        <ul>
-                            {party.start_time}
-                        </ul>
-                        <li>End Time: </li>
-                        <ul>
-                            {party.end_time}
-                        </ul>
-                        <li>Items: </li>
-                        <ul>
-                            {partyItems}
-                        </ul>
-                        <li>Users: </li>
-                        <ul>
-                            {partyUsers}
-                        </ul>
-                    </ul>
-                </ul>
-                <br />
-            </>
+    // NOTE: I used this StackOverflow post as a reference to utilize 'Object.keys().length' to determine the length of the object:
+    // https://stackoverflow.com/questions/126100/how-to-efficiently-count-the-number-of-keys-properties-of-an-object-in-javascrip
+    let partyLocation = (<li></li>)
+    if (party.location) {
+      if (Object.keys(party.location).length > 0) {
+        partyLocation = (
+          <li key={party.location.id}>{party.location.name}</li>
         )
-    });
+        // Create new 'marker' object for the map here
+        // Provide the 'party.location.id' as the 'id' value
+        // Provide the 'party.location.name' for the 'name' value
+        // Use the 'Geocoder' fetch call to obtain the correct longitude and latitude results for each of the locations --> This might be tricky since they might not be received in time
+        let newMarker = { id: party.location.id, name: party.name + ": " + party.location.name, position: party.location.position }
+        markers.push(newMarker);
+      }
+    }
 
+    let usersArray = [];
+
+    party.users.map((user) => {
+      usersArray.push(user);
+    })
+
+    let uniqueUsers = [...new Set(usersArray.map((user) => user.username ))]  ;
+    let partyUsers = uniqueUsers.map((user) => {
+      return (
+        <li key={uniqueUsers.indexOf(user)}>{user}</li>
+      )
+    })
+
+    // NOTE:
+    // This is a return statement for the 'partyResults' map variable above:
     return (
-        <div >
-            <h1>Map</h1>
-                <LoadScript
-                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
-                >
-                    <div className="GoogleMapDiv">
-                        <GoogleMap
-                            mapContainerStyle={containerStyle}
-                            center={centers[0]}
-                            zoom={3}
-                        >
-                            {markers.map(({ id, name, position }) => {
-                            return (
-                                <Marker
-                                key={id}
-                                position={position}
-                                onClick={() => handleActiveMarker(id)}
-                                >
-                                {activeMarker === id ? (
-                                    <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                                    <div>{name}</div>
-                                    </InfoWindow>
-                                ) : null}
-                                </Marker>
-                            )})}
-                        </GoogleMap>
-                    </div>
-                </LoadScript>
-            <h1>Summary</h1>
-            <div className="SummaryPageListDiv">
-                { partyResults }
-            </div>
-        </div>
+      <>
+        <ul>
+          <li>{party.name}</li>
+          <ul>
+            <li>Location</li>
+            <ul>
+              {partyLocation}
+            </ul>
+            <li>Start Time</li>
+            <ul>
+              {party.start_time}
+            </ul>
+            <li>End Time: </li>
+            <ul>
+              {party.end_time}
+            </ul>
+            <li>Items: </li>
+            <ul>
+              {partyItems}
+            </ul>
+            <li>Users: </li>
+            <ul>
+              {partyUsers}
+            </ul>
+          </ul>
+        </ul>
+        <br />
+      </>
     )
+  });
+
+  // NOTE:
+  // This is for the 'MaterialUI' card example:
+  const bull = (
+    <Box
+    component="span"
+    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    >
+      •
+    </Box>
+  );
+
+  // NOTE:
+  // This is the JSX return statement for the 'Summary' component:
+  return (
+    <div >
+      <h1>Map</h1>
+      <LoadScript
+      googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
+      >
+        <div className="GoogleMapDiv">
+          <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={centers[0]}
+          zoom={3}
+          >
+            {markers.map(({ id, name, position }) => {
+              return (
+                <Marker
+                key={id}
+                position={position}
+                onClick={() => handleActiveMarker(id)}
+                >
+                  {activeMarker === id ? (
+                    <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                      <div>{name}</div>
+                    </InfoWindow>
+                  ) : null}
+                </Marker>
+            )})}
+          </GoogleMap>
+        </div>
+      </LoadScript>
+      <h1>Summary</h1>
+      <div className="SummaryPageListDiv">
+        { partyResults }
+      </div>
+      <Card sx={{ minWidth: 275 }}>
+        <CardContent>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            Word of the Day
+          </Typography>
+          <Typography variant="h5" component="div">
+            be{bull}nev{bull}o{bull}lent
+          </Typography>
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            adjective
+          </Typography>
+          <Typography variant="body2">
+            well meaning and kindly.
+            <br />
+            {'"a benevolent smile"'}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">Learn More</Button>
+        </CardActions>
+      </Card>
+    </div>
+  )
 
 }
 
