@@ -1,17 +1,6 @@
 * Kanban Board
 ** Backlog
 ** In Progress
-*** Add MaterialUI style fields and buttons to existing component pages
-<2023-03-23 Thu 12:22>: I am borrowing heavily from this project I already did, more specifically this section of the project as it contains very similar ideas that I could just use to swap out with MaterialUI style fields
-- https://github.com/SamuelBanya/SmoothMoves-Frontend/blob/main/src/components/moveComponents/CreateMoveForm.js
-
-<2023-03-23 Thu 14:19>: I used these links as references for weird styling issues I encountered:
-- StackOverflow reference for how to use 'InputLabelProps' property to force the labels for 'TextField' components to automatically shrink since they're being automatically given values in my application:
-- https://stackoverflow.com/questions/68480218/material-ui-textfield-label-does-not-move-up-when-the-value-for-textfield-is-set
-- How to use the 'spacing' property for 'Grid' MaterialUI components so that the form components have a bit more space as needed:
-- https://stackoverflow.com/questions/60760224/how-to-give-space-in-between-the-fields-in-material-ui
-- How to add another 'Grid' item to add an additional space before the 'Button' component in MaterialUI:
-- https://stackoverflow.com/questions/63295022/how-to-add-a-new-row-for-grid-item-in-material-ui
 *** Add autocompletion for address based form for 'Location' component
 <2023-03-23 Thu 12:23>: I would like to research if it's possible to add autocompleted address forms for MaterialUI based fields to make the process easier.
 *** Add date timestamp widget to 'Party' component
@@ -158,3 +147,14 @@ I then migrated the MaterialUI 'Card' component example to the project. I also f
 
 Related reference on changing the 'value' tag of a simple 'input' tag:
 - https://www.studytonight.com/html-faq/how-to-change-text-of-form-submit-button
+*** DONE Add MaterialUI style fields and buttons to existing component pages
+<2023-03-23 Thu 12:22>: I am borrowing heavily from this project I already did, more specifically this section of the project as it contains very similar ideas that I could just use to swap out with MaterialUI style fields
+- https://github.com/SamuelBanya/SmoothMoves-Frontend/blob/main/src/components/moveComponents/CreateMoveForm.js
+
+<2023-03-23 Thu 14:19>: I used these links as references for weird styling issues I encountered:
+- StackOverflow reference for how to use 'InputLabelProps' property to force the labels for 'TextField' components to automatically shrink since they're being automatically given values in my application:
+- https://stackoverflow.com/questions/68480218/material-ui-textfield-label-does-not-move-up-when-the-value-for-textfield-is-set
+- How to use the 'spacing' property for 'Grid' MaterialUI components so that the form components have a bit more space as needed:
+- https://stackoverflow.com/questions/60760224/how-to-give-space-in-between-the-fields-in-material-ui
+- How to add another 'Grid' item to add an additional space before the 'Button' component in MaterialUI:
+- https://stackoverflow.com/questions/63295022/how-to-add-a-new-row-for-grid-item-in-material-ui
