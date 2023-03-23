@@ -1,10 +1,24 @@
 * Kanban Board
 ** Backlog
 ** In Progress
-*** Add autocompletion for address based form for 'Location' component
+*** TODO Add autocompletion for address based form for 'Add Location' and 'Edit Location' component pages
 <2023-03-23 Thu 12:23>: I would like to research if it's possible to add autocompleted address forms for MaterialUI based fields to make the process easier.
-*** Add date timestamp widget to 'Party' component
+
+<2023-03-23 Thu 15:23>: This will most likely again require a Google Maps API key since this is probably best suited for Google's 'Place Autocomplete' API:
+- https://developers.google.com/maps/documentation/javascript/place-autocomplete
+
+More specifically, MaterialUI DOES have their own version of this, and the more saner approach is to literally rip it from the Material UI Docs page, and just change the fields to suit what is currently present for the location based fields in the 'Add Location' and 'Edit Location' component pages:
+- https://mui.com/material-ui/react-autocomplete/
+
+This however will require a lot of work to be able to implement.
+
+*** TODO Add date timestamp widget to 'Add Party' and 'Edit Party' component pages
 <2023-03-23 Thu 12:24>: Instead of having to force the user to manually type in the time, it would be nice for them to be able to just pick a date and timestamp automatically. I will have to look into NPM for a related package.
+
+<2023-03-23 Thu 15:27>: I don't think I actually need a random NPM package since I can probably just use MaterialUI's 'date-picker' components fonud here:
+- https://mui.com/x/react-date-pickers/getting-started/
+
+This will require a bit of time since I have to use 'npm install' to install the related components, and to import them into the correct sections within the 'Add Party' and 'Edit Party' component pages.
 ** In Review
 ** Completed
 *** DONE Setup Kanban board org file
