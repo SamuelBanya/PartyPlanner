@@ -1,6 +1,13 @@
 * Kanban Board
 ** Backlog
 ** In Progress
+*** Add MaterialUI style fields and buttons to existing component pages
+<2023-03-23 Thu 12:22>: I am borrowing heavily from this project I already did, more specifically this section of the project as it contains very similar ideas that I could just use to swap out with MaterialUI style fields
+- https://github.com/SamuelBanya/SmoothMoves-Frontend/blob/main/src/components/moveComponents/CreateMoveForm.js
+*** Add autocompletion for address based form for 'Location' component
+<2023-03-23 Thu 12:23>: I would like to research if it's possible to add autocompleted address forms for MaterialUI based fields to make the process easier.
+*** Add date timestamp widget to 'Party' component
+<2023-03-23 Thu 12:24>: Instead of having to force the user to manually type in the time, it would be nice for them to be able to just pick a date and timestamp automatically. I will have to look into NPM for a related package.
 ** In Review
 ** Completed
 *** DONE Setup Kanban board org file

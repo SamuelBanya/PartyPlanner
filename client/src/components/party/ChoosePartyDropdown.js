@@ -1,27 +1,36 @@
-import React from "react";
+// import React, { useState } from "react";
+import React, { useState } from "react";
+// From MaterialUI:
+import Box from '@mui/material/Box';
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 function ChoosePartyForm({ parties, onChooseParty}) {
-    let partyOptionsArray = parties.map(party => {
-        return (
-            <option key={party.id} value={party.name}>{party.name}</option>
-        )
-    });
 
+  const [partySelection, setPartySelection] = useState("");
 
+  let partyOptionsArray = parties.map(party => {
     return (
-        <>
-            <h2>Choose Party: </h2>
-            <form>
-                <label htmlFor="choose_party">Choose a Party:</label>
-                <br />
-                <select name="choose_party" id="choose_party" onChange={onChooseParty}>
-                    <option disabled selected value> -- Select a party -- </option>
-                    { partyOptionsArray }
-                </select>
-                <br />
-            </form>
-        </>
+      <MenuItem key="{party.name}"  value={party.name}>{party.name}</MenuItem>
     )
+  });
+
+  return (
+    <FormControl style={{minWidth: 200}}>
+    <InputLabel id="demo-simple-select-label">Choose a Party:</InputLabel>
+    <br />
+    <Select
+    labelId="demo-simple-select-label"
+    id="choose_party"
+    label="Choose Party"
+    onChange={onChooseParty}
+    >
+    { partyOptionsArray }
+</Select>
+      </FormControl>
+  )
 }
 
 export default ChoosePartyForm;
