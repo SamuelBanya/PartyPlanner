@@ -225,7 +225,7 @@ function Summary({ parties, onFetchSummaryParties }) {
           </GoogleMap>
         </div>
       </LoadScript>
-      <h1>Summary</h1>
+      <h1>Parties</h1>
       <div className="SummaryPageListDiv">
         { partyResults }
       </div>
