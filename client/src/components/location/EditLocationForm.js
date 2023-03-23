@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import swal from "sweetalert";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
+// Material UI components for form buttons:
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocation, parties, onChooseParty, chosenParty }) {
 
@@ -103,14 +107,25 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
       <ChoosePartyDropdown parties={parties} onChooseParty={onChooseParty} />
       <h2>Edit Location</h2>
       <form>
-        <label htmlFor="name">Address of Location:</label>
-        <br />
-        <input onChange={handleEditLocationChange} type="text" id="name" name="location_name" value={editLocationFormData.location_name}/>
-        <br />
-        <br />
-        <input onClick={handleEdit} type="submit" value="Edit" />
-        <br />
-        <input onClick={handleDelete} type="submit" value="Delete" />
+        <Grid container alignItems="center" justify="center" direction="column" spacing={5}>
+          <Grid item>
+            <TextField
+            InputLabelProps={{ shrink: true }}
+            id="name"
+            name="location_name"
+            label='Name of Location'
+            type="text"
+            value={editLocationFormData.location_name}
+            onChange={handleEditLocationChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+          </Grid>
+          <Button onClick={handleEdit} variant="contained" color="primary" type="submit">Edit</Button>
+          <Grid item xs={8}>
+          </Grid>
+          <Button onClick={handleDelete} variant="contained" color="primary" type="submit">Delete</Button>
+        </Grid>
       </form>
     </div>
   )

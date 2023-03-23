@@ -13,7 +13,7 @@ function ChoosePartyForm({ parties, onChooseParty}) {
 
   let partyOptionsArray = parties.map(party => {
     return (
-      <MenuItem key="{party.name}"  value={party.name}>{party.name}</MenuItem>
+      <MenuItem key="{party.name}" value={party.name}>{party.name}</MenuItem>
     )
   });
 

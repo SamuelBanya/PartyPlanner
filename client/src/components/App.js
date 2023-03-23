@@ -10,6 +10,8 @@ import Summary from "./party/Summary";
 import Geocode from "react-geocode";
 import { HelloProvider } from "./context/HelloContext";
 import './App.css';
+// From MaterialUI:
+import MenuItem from "@mui/material/MenuItem";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,7 +42,7 @@ function App() {
       if (chosenParty.items) {
         let itemOptions = chosenParty.items.map((item) => {
             return (
-                <option key={item.id} value={item.name}>{item.name}</option>
+                <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
             )
         });
 
@@ -145,7 +147,7 @@ function App() {
 
         let itemOptions = updatedItemsArray.map((item) => {
             return (
-                <option key={item.id} value={item.name}>{item.name}</option>
+                <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
             )
         });
 
@@ -171,7 +173,7 @@ function App() {
 
     let itemOptions = chosenParty.items.map((item) => {
       return (
-          <option key={item.id} value={item.name}>{item.name}</option>
+          <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
       )
     });
 
@@ -185,7 +187,7 @@ function App() {
 
     let filteredItemOptions = chosenParty.items.map((item) => {
         return (
-            <option key={item.id} value={item.name}>{item.name}</option>
+            <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
         )
     });
 

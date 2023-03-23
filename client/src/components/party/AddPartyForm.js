@@ -29,7 +29,7 @@ function AddPartyForm({ onAddParty }) {
       .then((response) => response.json())
       .then((newParty) => {
         onAddParty(newParty);
-        swal("New party created! : \n" + createPartyFormData['name']);
+        swal("New party created! : \n\n" + createPartyFormData['name']);
       });
   }
 
@@ -37,7 +37,7 @@ function AddPartyForm({ onAddParty }) {
     <div>
       <h2>Add New Party</h2>
       <form onSubmit={handleCreatePartyFormSubmit}>
-        <Grid container alignItems="center" justify="center" direction="column">
+        <Grid container alignItems="center" justify="center" direction="column" spacing={5}>
           <Grid item>
             <TextField
             id="name"
@@ -70,7 +70,8 @@ function AddPartyForm({ onAddParty }) {
             onChange={handleCreatePartyChange}
             />
           </Grid>
-          <br />
+          <Grid item xs={8}>
+          </Grid>
           <Button variant="contained" color="primary" type="submit">Add Party</Button>
         </Grid>
       </form>

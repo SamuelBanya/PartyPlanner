@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
 import swal from "sweetalert";
+// From MaterialUI:
+import Box from '@mui/material/Box';
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 function EditItemForm({ itemOptions, setItemOptions, itemId, setItemId, onChangeItemInfo, onEditItem, onDeleteItem, parties, onChooseParty, chosenParty }) {
   const [editItemFormData, setEditItemFormData] = useState({
@@ -68,23 +77,40 @@ function EditItemForm({ itemOptions, setItemOptions, itemId, setItemId, onChange
       <br />
       <ChoosePartyDropdown parties={parties} onChooseParty={onChooseParty} />
       <h2>Edit Item</h2>
-      <form>
-        <label htmlFor="item_select">Choose an Item:</label>
+      <FormControl style={{minWidth: 200}}>
+        <InputLabel id="demo-simple-select-label">Choose an Item:</InputLabel>
         <br />
-        <select name="item_select" id="item_select" onChange={handleChooseItem}>
-          <option disabled selected value> -- Select an item -- </option>
+        <Select
+        labelId="demo-simple-select-label"
+        id="item_select"
+        label="Choose Item"
+        onChange={handleChooseItem}
+        >
           { itemOptions }
-        </select>
-        <br />
-        <br />
-        <label htmlFor="name">Name of Item:</label>
-        <br />
-        <input onChange={handleEditItemChange} type="text" id="name" name="item_name" value={editItemFormData.item_name}/>
-        <br />
-        <br />
-        <input onClick={handleEdit} type="submit" value="Edit" />
-        <br />
-        <input onClick={handleDelete} type="submit" value="Delete" />
+        </Select>
+      </FormControl>
+      <form>
+        <Grid container alignItems="center" justify="center" direction="column" spacing={5}>
+          <Grid item xs={8}>
+          </Grid>
+          <Grid item>
+            <TextField
+            InputLabelProps={{ shrink: true }}
+            id="name"
+            name="item_name"
+            label='Name of Item'
+            type="text"
+            value={editItemFormData.item_name}
+            onChange={handleEditItemChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+          </Grid>
+          <Button onClick={handleEdit} variant="contained" color="primary" type="submit">Edit</Button>
+          <Grid item xs={8}>
+          </Grid>
+          <Button onClick={handleDelete} variant="contained" color="primary" type="submit">Delete</Button>
+        </Grid>
       </form>
     </div>
   )

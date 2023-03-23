@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
 import swal from "sweetalert";
+// Material UI components for form buttons:
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 function AddItemForm({ onAddItem, parties, onChooseParty, chosenParty }) {
   const [createItemFormData, setCreateItemFormData] = useState({
@@ -25,7 +29,7 @@ function AddItemForm({ onAddItem, parties, onChooseParty, chosenParty }) {
       .then((response) => response.json())
       .then((newItem) => {
         onAddItem(newItem)
-        swal("New item added!");
+        swal("New item added! : \n\n" + createItemFormData['item_name']);
       });
   }
 
@@ -34,12 +38,21 @@ function AddItemForm({ onAddItem, parties, onChooseParty, chosenParty }) {
       <br />
       <ChoosePartyDropdown parties={parties} onChooseParty={onChooseParty} />
       <h2>Add New Item</h2>
-      <form>
-        <label htmlFor="name">Name of Item:</label>
-        <br />
-        <input onChange={handleCreateItemChange} type="text" id="name" name="item_name"/>
-        <br />
-        <input onClick={handleCreate} type="submit" value="Add Item"/>
+      <form onSubmit={handleCreate}>
+        <Grid container alignItems="center" justify="center" direction="column" spacing={5}>
+          <Grid item>
+            <TextField
+            id="name"
+            name="item_name"
+            label='Name of Item'
+            type="text"
+            onChange={handleCreateItemChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+          </Grid>
+          <Button variant="contained" color="primary" type="submit">Add Item</Button>
+        </Grid>
       </form>
     </div>
   )

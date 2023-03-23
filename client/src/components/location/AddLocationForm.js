@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
 import swal from "sweetalert";
+// Material UI components for form buttons:
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) {
   console.log("parties within AddLocationForm child component: ", parties);
@@ -28,7 +32,7 @@ function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) 
       .then((response) => response.json())
       .then((newLocation) => {
         onAddLocation(newLocation);
-        swal("Location added!");
+        swal("Location added! : \n\n" + createLocationFormData['location_name']);
       });
   }
 
@@ -37,16 +41,24 @@ function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) 
       <br />
       <ChoosePartyDropdown parties={parties} onChooseParty={onChooseParty} />
       <h2>Add Location</h2>
-      <form>
-        <label htmlFor="name">Address of Location:</label>
-        <br />
-        <input onChange={handleCreateLocationChange} type="text" id="name" name="location_name"/>
-        <br />
-        <input onClick={handleCreate} type="submit" value="Add Location"/>
+      <form onSubmit={handleCreate}>
+        <Grid container alignItems="center" justify="center" direction="column" spacing={5}>
+          <Grid item>
+            <TextField
+            id="name"
+            name="location_name"
+            label='Address of Location'
+            type="text"
+            onChange={handleCreateLocationChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+          </Grid>
+          <Button variant="contained" color="primary" type="submit">Add Location</Button>
+        </Grid>
       </form>
     </div>
   )
-
 
 }
 
