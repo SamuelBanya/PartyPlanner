@@ -7,8 +7,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) {
-  console.log("parties within AddLocationForm child component: ", parties);
-
   const [createLocationFormData, setCreateLocationFormData] = useState({
     name: "",
   });
@@ -20,7 +18,6 @@ function AddLocationForm({ parties, onChooseParty, onAddLocation, chosenParty}) 
   const handleCreate = (e) => {
     e.preventDefault();
     const id = chosenParty.id;
-    console.log("id in handleCreate function in AddLocationForm child component: ", id);
     fetch(`/parties/${id}/location`, {
       method: "POST",
       headers: {

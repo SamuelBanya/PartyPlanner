@@ -11,6 +11,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+// Dependencies for 'dayjs' library to display date time stamps in a human readable fashion:
+import dayjs, { Dayjs } from 'dayjs';
 
 // Links on how to protect the Google Maps API key:
 // https://medium.com/@muesingb/a-simple-guide-to-hiding-api-keys-in-rails-and-react-using-environment-variables-abc6199f487e
@@ -156,13 +158,13 @@ function Summary({ parties, onFetchSummaryParties }) {
               Start Time:
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {party.start_time}
+              {dayjs(party.start_time).format("dddd, MMMM D YYYY h:mm:ss a")}
             </Typography>
             <Typography variant="h5" component="div">
               End Time:
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {party.end_time}
+              {dayjs(party.end_time).format("dddd, MMMM D YYYY h:mm:ss a")}
             </Typography>
             <Typography variant="h5" component="div">
               Items:

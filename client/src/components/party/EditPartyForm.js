@@ -5,21 +5,39 @@ import swal from "sweetalert";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+// Dependencies from Material UI based 'Date Picker' Docs page example:
+import dayjs, { Dayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
+// Variables to allow for validation for 'startTime' and 'endTime' MaterialUI based 'DateTimePicker' fields:
+const today = dayjs();
+const yesterday = dayjs().subtract(1, 'day');
 
 function EditPartyForm({ parties, onChooseParty, onEditParty, onDeleteParty, chosenParty }) {
   useEffect(() => {
     setEditPartyFormData({
-      name: chosenParty.name,
-      start_time: chosenParty.start_time,
-      end_time: chosenParty.end_time
-    })
+      name: chosenParty.name
+    });
+
+    setStartTime(dayjs(chosenParty.start_time));
+    setEndTime(dayjs(chosenParty.end_time));
+
   }, [chosenParty]);
 
+  // NOTE:
+  // I had to separate 'start_time' and 'end_time' into their own components because of how
+  // different the 'event' is for MaterialUI components like the 'DateTimePicker'
+
   const [editPartyFormData, setEditPartyFormData] = useState({
-    name: chosenParty.name,
-    start_time: chosenParty.start_time,
-    end_time: chosenParty.end_time
+    name: chosenParty.name
   });
+
+  // const [startTime, setStartTime] = useState(dayjs());
+  // const [endTime, setEndTime] = useState(dayjs());
+  const [startTime, setStartTime] = useState(dayjs());
+  const [endTime, setEndTime] = useState(dayjs());
 
   const handleEditPartyChange = (e) => {
     setEditPartyFormData({...editPartyFormData, [e.target.name]: e.target.value})
@@ -36,7 +54,7 @@ function EditPartyForm({ parties, onChooseParty, onEditParty, onDeleteParty, cho
         "Content-Type": "application/json",
         "Accept": "application/json",
       },
-      body: JSON.stringify({ "name": editPartyFormData["name"], "start_time": editPartyFormData["start_time"], "end_time": editPartyFormData["end_time"] }),
+      body: JSON.stringify({ "name": editPartyFormData["name"], "start_time": dayjs(startTime["$d"]), "end_time": dayjs(endTime["$d"]) }),
     })
       .then((response) => response.json())
       .then((response) => {
@@ -88,27 +106,29 @@ function EditPartyForm({ parties, onChooseParty, onEditParty, onDeleteParty, cho
           </Grid>
           <br />
           <Grid item>
-            <TextField
-            InputLabelProps={{ shrink: true }}
-            id="start_time"
-            name="start_time"
-            label='Start Time of Party'
-            type="text"
-            value={editPartyFormData.start_time}
-            onChange={handleEditPartyChange}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+              label="Start Time of Party"
+              id="start_time"
+              name="start_time"
+              value={startTime}
+              onChange={(newValue) => setStartTime(newValue)}
+              minDate={yesterday}
+              />
+            </LocalizationProvider>
           </Grid>
           <br />
           <Grid item>
-            <TextField
-            InputLabelProps={{ shrink: true }}
-            id="end_time"
-            name="end_time"
-            label='End Time of Party'
-            type="text"
-            value={editPartyFormData.end_time}
-            onChange={handleEditPartyChange}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+              label="End Time of Party"
+              id="end_time"
+              name="end_time"
+              value={endTime}
+              onChange={(newValue) => setEndTime(newValue)}
+              minDate={yesterday}
+              />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={8}>
           </Grid>

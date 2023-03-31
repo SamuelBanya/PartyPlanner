@@ -4,13 +4,36 @@ import swal from "sweetalert";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+// Dependencies from Material UI based 'Date Picker' Docs page example:
+import dayjs, { Dayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
+// Variables to allow for validation for 'startTime' and 'endTime' MaterialUI based 'DateTimePicker' fields:
+const today = dayjs();
+const yesterday = dayjs().subtract(1, 'day');
 
 function AddPartyForm({ onAddParty }) {
   const [createPartyFormData, setCreatePartyFormData] = useState({
-    name: "",
-    start_time: "",
-    end_time: ""
+    name: ""
   });
+
+  // Adding 'start_time' and 'end_time' changes separately because MaterialUI does not utilize
+  // 'e.target.value' in the same fashion:
+  // const simplifiedISOString = toSimplifiedISOString(dayjs());
+  // const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
+  // const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
+  // const [startTime, setStartTime] = useState(dayjs(simplifiedISOString));
+  // const [endTime, setEndTime] = useState(dayjs(simplifiedISOString));
+  const [startTime, setStartTime] = useState(dayjs());
+  const [endTime, setEndTime] = useState(dayjs());
+
+  // Example for 'Date Picker' from MaterialUI:
+  // https://mui.com/x/react-date-pickers/date-picker/
+
+  // Related YouTube video:
+  // React Material UI Tutorial - 40 - Date and Time Picker (https://www.youtube.com/watch?v=OpaT8jLB-hc)
 
   const handleCreatePartyChange = (e) => {
     setCreatePartyFormData({...createPartyFormData, [e.target.name]: e.target.value})
@@ -18,13 +41,17 @@ function AddPartyForm({ onAddParty }) {
 
   const handleCreatePartyFormSubmit = (e) => {
     e.preventDefault();
+    // NOTE:
+    // If I want to actually USE the date time stamps elsewhere, like the 'Edit Parties' component,
+    // then, I will need to place the entire recorded '$d' key value in 'dayjs' to restore it
+    // aka 'dayjs(endTime["$d"])'
     fetch("/parties", {
-      method: "POST",
+    method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
       },
-      body: JSON.stringify({ "name": createPartyFormData["name"], "start_time": createPartyFormData["start_time"], "end_time": createPartyFormData["end_time"] }),
+      body: JSON.stringify({ "name": createPartyFormData["name"], "start_time": dayjs(startTime["$d"]), "end_time": dayjs(endTime["$d"]) }),
     })
       .then((response) => response.json())
       .then((newParty) => {
@@ -50,25 +77,29 @@ function AddPartyForm({ onAddParty }) {
           </Grid>
           <br />
           <Grid item>
-            <TextField
-            id="start_time"
-            name="start_time"
-            label='Start Time of Party'
-            type="text"
-            value={createPartyFormData.start_time}
-            onChange={handleCreatePartyChange}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+              label="Start Time of Party"
+              id="start_time"
+              name="start_time"
+              value={startTime}
+              onChange={(newValue) => setStartTime(newValue)}
+              minDate={yesterday}
+              />
+            </LocalizationProvider>
           </Grid>
           <br />
           <Grid item>
-            <TextField
-            id="end_time"
-            name="end_time"
-            label='End Time of Party'
-            type="text"
-            value={createPartyFormData.end_time}
-            onChange={handleCreatePartyChange}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+              label="End Time of Party"
+              id="end_time"
+              name="end_time"
+              value={endTime}
+              onChange={(newValue) => setEndTime(newValue)}
+              minDate={yesterday}
+              />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={8}>
           </Grid>
