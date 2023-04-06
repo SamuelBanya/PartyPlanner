@@ -3,7 +3,6 @@ import AddLocationForm from "./AddLocationForm";
 import EditLocationForm from "./EditLocationForm";
 
 function Location({ parties, onFetchParties, onAddLocation, onEditLocation, onDeleteLocation, location, locationId, onChooseParty, chosenParty}) {
-    console.log("parties within Location child component: ", parties);
     useEffect(() => {
         fetch("/parties", {
         method: "GET",
@@ -37,22 +36,22 @@ function Location({ parties, onFetchParties, onAddLocation, onEditLocation, onDe
             <br />
             <button onClick={toggleEditLocation}>Edit Location</button>
             <br />
-            { 
+            {
                 showAdd  &&
-                <AddLocationForm 
-                    onAddLocation={onAddLocation} 
+                <AddLocationForm
+                    onAddLocation={onAddLocation}
                     parties={parties} onChooseParty={onChooseParty} chosenParty={chosenParty}
                 />
             }
-            {   
+            {
                 showAdd && showEdit &&
                 <hr/>
             }
-            {   
+            {
                 showEdit &&
-                <EditLocationForm 
+                <EditLocationForm
                     onEditLocation={onEditLocation} onDeleteLocation={onDeleteLocation} location={location} locationId={locationId}
-                    parties={parties} onChooseParty={onChooseParty} chosenParty={chosenParty} 
+                    parties={parties} onChooseParty={onChooseParty} chosenParty={chosenParty}
                 />
             }
         </div>

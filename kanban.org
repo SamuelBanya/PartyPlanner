@@ -1,17 +1,6 @@
 * Kanban Board
 ** Backlog
 ** In Progress
-*** TODO Add autocompletion for address based form for 'Add Location' and 'Edit Location' component pages
-<2023-03-23 Thu 12:23>: I would like to research if it's possible to add autocompleted address forms for MaterialUI based fields to make the process easier.
-
-<2023-03-23 Thu 15:23>: This will most likely again require a Google Maps API key since this is probably best suited for Google's 'Place Autocomplete' API:
-- https://developers.google.com/maps/documentation/javascript/place-autocomplete
-
-More specifically, MaterialUI DOES have their own version of this, and the more saner approach is to literally rip it from the Material UI Docs page, and just change the fields to suit what is currently present for the location based fields in the 'Add Location' and 'Edit Location' component pages:
-- https://mui.com/material-ui/react-autocomplete/
-
-This however will require a lot of work to be able to implement.
-
 ** In Review
 ** Completed
 *** DONE Setup Kanban board org file
@@ -194,3 +183,48 @@ This API page was a bit helpful as well for this topic:
 - https://mui.com/x/api/date-pickers/date-time-picker/
 
 <2023-03-30 Thu 23:11>: I was able to make the changes successfully with a lot of overall, and a lot of work, but alas it got done :)
+*** DONE Add autocompletion for address based form for 'Add Location' and 'Edit Location' component pages
+<2023-03-23 Thu 12:23>: I would like to research if it's possible to add autocompleted address forms for MaterialUI based fields to make the process easier.
+
+<2023-03-23 Thu 15:23>: This will most likely again require a Google Maps API key since this is probably best suited for Google's 'Place Autocomplete' API:
+- https://developers.google.com/maps/documentation/javascript/place-autocomplete
+
+More specifically, MaterialUI DOES have their own version of this, and the more saner approach is to literally rip it from the Material UI Docs page, and just change the fields to suit what is currently present for the location based fields in the 'Add Location' and 'Edit Location' component pages:
+- https://mui.com/material-ui/react-autocomplete/
+
+This however will require a lot of work to be able to implement.
+
+<2023-04-04 Tue 18:33>: I am in the process of figuring out how to actually utilize the Google Maps autocomplete example from MaterialUI docs in my project slowly, bit by bit.
+
+The one thing I had to install due to the related '@mui/icons-material/LocationOn' icon that's needed from the example was the following MaterialUI specific package:
+#+begin_src bash
+npm install @mui/icons-material
+#+end_src
+
+I also had to install this package as well:
+#+begin_src bash
+npm install autosuggest-highlight
+#+end_src
+
+<2023-04-06 Thu 12:10>: I have been having difficulties trying to implement the MaterialUI Docs page example because it is a self contained React component that you import into wherever you want.
+
+There are 3 potential solutions to this issue:
+1. I figure out how to pass the 'value' state variable from the '<GoogleMaps />' component to the parent 'AddLocation.js' component
+2. I literally just forgo the whole import idea and just place the entireity of the '<GoogleMaps />' component into the 'AddLocation.js' component
+3. I disassemble the '<GoogleMaps />' component into its barebones so I can just interact with the '<Autocomplete />' field from MaterialUI without all of the extra noise
+4. I look for any related examples online of anyone who has incorporated a Google Maps based '<Autocomplete />' Material UI component into a React controlled form
+
+<2023-04-06 Thu 12:24>: Advice from online:
+#+begin_src text
+You need to lift the state up. [value, setValue] from the parent, and pass the setter function to the child
+(and optionally the value itself, if the child needs it)
+
+Yeah, just define the state in <AddLocation> and pass it down to <GoogleMaps> as a prop
+you dont "pass UP" the data. it flows downwards in react
+#+end_src
+
+<2023-04-06 Thu 13:16>: I was able to get the 'GoogleMaps' component work successfully by passing the related 'value' via props DOWN from the 'AddLocationForm.js' component to the 'GoogleMaps.js' component
+
+<2023-04-06 Thu 16:13>: I was also able to add this functionality to the 'EditLocationForm.js' component in a similar manner, though it required a bit of fiddling around with the output data.
+
+I also improved the Summary page a slight bit as a result, and the overall feel is definitely improved as a result.

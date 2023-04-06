@@ -5,45 +5,48 @@ import ChoosePartyDropdown from "../party/ChoosePartyDropdown";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+// Importing 'GoogleMaps' component that is from MaterialUI docs page that was provided from here under 'Google Maps place':
+// https://mui.com/material-ui/react-autocomplete/
+import GoogleMaps from "./GoogleMaps.js";
 
 function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocation, parties, onChooseParty, chosenParty }) {
-
-  const [editLocationFormData, setEditLocationFormData] = useState({
-    location_name: ""
-  });
+  // NOTE:
+  // This is used for the '<GoogleMaps />' component:
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
+    console.log("CHECKING useEffect: ");
+    console.log("location: ", location);
     if (location.length === 0) {
-      setEditLocationFormData({location_name: ""});
+      setValue("")
     }
     else {
-      setEditLocationFormData({location_name: location});
+      setValue(location)
     }
   }, [chosenParty]);
-
-  const handleEditLocationChange = (e) => {
-    setEditLocationFormData({...editLocationFormData, [e.target.name]: e.target.value})
-  }
 
   const handleEdit = (e) => {
     e.preventDefault();
 
     const partyId = chosenParty.id;
 
-    fetch(`/parties/${partyId}/location`, {
-      // fetch(`/parties/${partyId}/location/${locationId}`, {
+    if (value["description"] === undefined) {
+    } else {
+      console.log('value["description"] in EditLocationForm component after Edit button clicked: ', value["description"]);
+      fetch(`/parties/${partyId}/location`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify({"name": editLocationFormData["location_name"], "party_id": partyId, "locationId": locationId}),
-    })
-      .then((response) => response.json())
-      .then((editedLocation) => {
-        onEditLocation(editedLocation);
-        swal("Location edited!");
+        body: JSON.stringify({"name": value["description"], "party_id": partyId, "locationId": locationId}),
       })
+        .then((response) => response.json())
+        .then((editedLocation) => {
+          onEditLocation(editedLocation);
+          swal("Location edited!");
+        })
+    }
   }
 
   const handleDelete = (e) => {
@@ -56,7 +59,7 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify({"name": editLocationFormData["location_name"], "party_id": partyId, "locationId": locationId}),
+      body: JSON.stringify({"name": value["description"], "party_id": partyId, "locationId": locationId}),
     })
       .then((response) => {
         if (response.ok) {
@@ -74,15 +77,7 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
       <form>
         <Grid container alignItems="center" justify="center" direction="column" spacing={5}>
           <Grid item>
-            <TextField
-            InputLabelProps={{ shrink: true }}
-            id="name"
-            name="location_name"
-            label='Name of Location'
-            type="text"
-            value={editLocationFormData.location_name}
-            onChange={handleEditLocationChange}
-            />
+            <GoogleMaps value={value} setValue={setValue} />
           </Grid>
           <Grid item xs={8}>
           </Grid>

@@ -142,37 +142,37 @@ function Summary({ parties, onFetchSummaryParties }) {
     // NOTE:
     // This is a return statement for the 'partyResults' map variable above:
     return (
-      <>
+      <div key={party.id}>
         <Card sx={{ minWidth: 275 }} style={{background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,172,9,1) 0%, rgba(255,0,191,1) 100%)'}}>
           <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            <Typography variant="h5" component="div">
               {party.name}
             </Typography>
-            <Typography variant="h5" component="div">
+            <Typography variant="h6" component="div">
               Location:
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {partyLocation}
             </Typography>
-            <Typography variant="h5" component="div">
+            <Typography variant="h6" component="div">
               Start Time:
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {dayjs(party.start_time).format("dddd, MMMM D YYYY h:mm:ss a")}
             </Typography>
-            <Typography variant="h5" component="div">
+            <Typography variant="h6" component="div">
               End Time:
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {dayjs(party.end_time).format("dddd, MMMM D YYYY h:mm:ss a")}
             </Typography>
-            <Typography variant="h5" component="div">
+            <Typography variant="h6" component="div">
               Items:
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {partyItems}
             </Typography>
-            <Typography variant="h5" component="div">
+            <Typography variant="h6" component="div">
               Users:
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -181,20 +181,9 @@ function Summary({ parties, onFetchSummaryParties }) {
           </CardContent>
         </Card>
         <br />
-      </>
+      </div>
     )
   });
-
-  // NOTE:
-  // This is for the 'MaterialUI' card example:
-  const bull = (
-    <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-      •
-    </Box>
-  );
 
   // NOTE:
   // This is the JSX return statement for the 'Summary' component:
