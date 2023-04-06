@@ -15,8 +15,6 @@ function EditLocationForm({ location, locationId, onEditLocation, onDeleteLocati
   const [value, setValue] = useState(null);
 
   useEffect(() => {
-    console.log("CHECKING useEffect: ");
-    console.log("location: ", location);
     if (location.length === 0) {
       setValue("")
     }
